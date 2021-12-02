@@ -14,6 +14,8 @@ RSpec.describe Answer, type: :model do
 
   describe  "database" do
     it { should have_db_index(:question_id) }
+    it { should have_db_column(:question_id).with_options(null: false) }
+    it { should have_db_column(:question_id).of_type(:integer) }
   end
 
 end
