@@ -9,6 +9,11 @@ RSpec.describe Answer, type: :model do
   describe "validations" do
     it {should validate_presence_of :title }
     it {should validate_presence_of :body }
+    it {should validate_presence_of :question_id }
+  end
+
+  describe  "database" do
+    it { should have_db_index(:question_id) }
   end
 
 end
