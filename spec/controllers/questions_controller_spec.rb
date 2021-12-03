@@ -53,4 +53,11 @@ RSpec.describe QuestionsController, type: :controller do
       expect(response).to render_template :edit
     end
   end
+
+  describe 'POST #create' do
+    context 'with valid attributes'
+
+  end
+
+
 end
