@@ -3,6 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe Answer, type: :model do
+
+  let(:answer){build(:question)}
+  # валидна ли фабрика
+  it "factory should be valid" do
+    expect(answer).to be_valid
+  end
+
   describe 'associations' do
     it { should belong_to(:question) }
   end

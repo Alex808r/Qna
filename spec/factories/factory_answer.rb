@@ -2,6 +2,7 @@
 
 FactoryBot.define do
   factory :answer do
+    association(:question)
     title { 'MyString' }
     body { 'MyText' }
     question { nil }
