@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
+  let(:question){ create(:question) }
+
   describe 'GET #index' do
     let(:questions) { create_list(:question, 3) }
 
@@ -77,6 +79,40 @@ RSpec.describe QuestionsController, type: :controller do
       it 're-renders new view' do
         post :create, params: { question: attributes_for(:question, :invalid) }
         expect(response).to render_template :new
+      end
+    end
+  end
+
+  describe 'PATCH #update' do
+    context 'with valid attributes' do
+      it 'assigns the requested question to @question' do
+        patch :update, params: { id: question, question: attributes_for(:question) }
+        expect(assigns(:question)).to eq question
+      end
+
+      it 'changes question attributes' do
+        patch :update, params: { id: question, question:{title: 'new title', body: 'new body'} }
+        question.reload
+        expect(question.title).to eq 'new title'
+        expect(question.body).to eq 'new body'
+      end
+      it 'redirect to updated question' do
+        patch :update, params: { id: question, question: attributes_for(:question) }
+        expect(response).to redirect_to question
+      end
+
+    end
+    context 'with invalid attributes' do
+      it 'does not change question' do
+        patch :update, params: {id: question, question: attributes_for(:question, :invalid) }
+        question.reload
+        expect(question.title).to eq 'MyString'
+        expect(question.body).to eq 'MyText'
+      end
+
+      it 're-renders edit view' do
+        patch :update, params: {id: question, question: attributes_for(:question, :invalid) }
+        expect(response).to render_template :edit
       end
     end
   end
