@@ -39,4 +39,18 @@ RSpec.describe QuestionsController, type: :controller do
       expect(response).to render_template :new
     end
   end
+
+  describe 'GET #edit' do
+    let(:question){FactoryBot.create(:question)}
+    before {get :edit, params:{id: question} }
+
+
+    it 'change the requested question to @question' do
+      expect(assigns(:question)).to eq question
+    end
+
+    it 'render edit view' do
+      expect(response).to render_template :edit
+    end
+  end
 end
