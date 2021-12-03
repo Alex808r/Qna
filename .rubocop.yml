@@ -14,3 +14,6 @@ Style/ClassAndModuleChildren:
 
 Rails/FilePath:
   EnforcedStyle: arguments
+
+Metrics/BlockLength:
+  Enabled: false

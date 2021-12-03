@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
   describe 'GET #index' do
-    let(:questions){create_list(:question, 3)}
+    let(:questions) { create_list(:question, 3) }
 
     before { get :index }
 
@@ -16,8 +18,8 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #show' do
-    let(:question){create(:question)}
-    before { get :show, params: {id: question} } # эквивалент get :show, params: {id: question.id}
+    let(:question) { create(:question) }
+    before { get :show, params: { id: question } } # эквивалент get :show, params: {id: question.id}
 
     it 'assigns the requested question to @question' do
       expect(assigns(:question)).to eq question
@@ -41,9 +43,8 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #edit' do
-    let(:question){FactoryBot.create(:question)}
-    before {get :edit, params:{id: question} }
-
+    let(:question) { FactoryBot.create(:question) }
+    before { get :edit, params: { id: question } }
 
     it 'change the requested question to @question' do
       expect(assigns(:question)).to eq question
@@ -55,9 +56,28 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'POST #create' do
-    context 'with valid attributes'
+    context 'with valid attributes' do
+      it 'saves a new question in the database' do
+        expect { post :create, params: { question: attributes_for(:question) } }
+          .to change(Question, :count).by(1)
+      end
 
+      it 'redirects to show view' do
+        post :create, params: { question: attributes_for(:question) }
+        expect(response).to redirect_to assigns(:question)
+      end
+    end
+
+    context 'with invalid attributes' do
+      it 'does not save the question' do
+        expect { post :create, params: { question: attributes_for(:question, :invalid) } }
+          .not_to change(Question, :count)
+      end
+
+      it 're-renders new view' do
+        post :create, params: { question: attributes_for(:question, :invalid) }
+        expect(response).to render_template :new
+      end
+    end
   end
-
-
 end
