@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Question, type: :model do
-  let(:question) { build(:question) }
+  let(:question) { build(:question_factory) }
 
   it 'factory should be valid' do
     # expect(user.valid?).to eq(true) аналогичная запись

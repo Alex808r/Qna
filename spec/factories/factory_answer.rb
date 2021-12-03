@@ -5,6 +5,6 @@ FactoryBot.define do
     association(:question)
     title { 'MyString' }
     body { 'MyText' }
-    question { :question }
+    question { :question_factory }
   end
 end
