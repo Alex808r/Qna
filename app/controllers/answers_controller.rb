@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
 class AnswersController < ApplicationController
-  
   before_action :set_question, only: %i[new create]
   before_action :set_answer, only: %i[show edit update]
-  
+
   def show; end
 
   def new
@@ -39,7 +38,7 @@ class AnswersController < ApplicationController
   def set_question
     @question = Question.find(params[:question_id])
   end
-  
+
   def set_answer
     # @answer = @question.answers.find(params[:id])
     @answer = Answer.find(params[:id])
