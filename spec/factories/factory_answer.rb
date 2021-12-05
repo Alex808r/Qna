@@ -3,8 +3,8 @@
 FactoryBot.define do
   factory :answer do
     association(:question)
-    title { 'MyString' }
-    body { 'MyText' }
+    title { 'MyAnswer' }
+    body { 'MyAnswer' }
     # question { :question_factory }
 
     trait :invalid do
