@@ -6,5 +6,9 @@ FactoryBot.define do
     title { 'MyString' }
     body { 'MyText' }
     # question { :question_factory }
+
+    trait :invalid do
+      title { nil }
+    end
   end
 end
