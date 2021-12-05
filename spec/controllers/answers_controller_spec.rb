@@ -10,7 +10,6 @@ RSpec.describe AnswersController, type: :controller do
     before { get :show, params: {id: answer, question_id: question } }
 
     it 'assigns the requested answer to @answer' do
-      get :show, params: { id: answer, question_id: question }
       expect(assigns(:answer)).to eq answer
     end
 
