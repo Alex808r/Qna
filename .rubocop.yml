@@ -17,3 +17,9 @@ Rails/FilePath:
 
 Metrics/BlockLength:
   Enabled: false
+
+Style/PercentLiteralDelimiters:
+  Enabled: false
+
+Style/RedundantPercentQ:
+  Enabled: false

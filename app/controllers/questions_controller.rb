@@ -41,10 +41,9 @@ class QuestionsController < ApplicationController
   private
 
   def set_question
-    @question =  Question.find(params[:id])
+    @question = Question.find(params[:id])
     # @question ||= params[:id] ? Question.find(params[:id]) : Question.new
   end
-  
   # helper_method :set_question
 
   def question_params
