@@ -1,2 +1,19 @@
+p
+h1= @question.id
 h1= @question.title
 p= @question.body
+
+h4 All Answer
+table
+  thead
+    tr
+      th Id
+      th Title
+      th Body
+  tbody
+= render partial: 'answers/answer', collection: @question.answers
+/ = render 'answers/answer', collection: @question.answers
+
+-if user_signed_in?
+  = render 'answers/form'
+

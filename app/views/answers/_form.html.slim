@@ -1,0 +1,13 @@
+h4 New Answer
+
+=render 'shared/errors', resource: @answer
+
+= form_with model: [@question, @answer], local: true do |f|
+  p
+  = f.label :title
+  = f.text_field :title
+  p
+  = f.label :body
+  = f.text_area :body
+  p
+  = f.submit 'Create Answer'
