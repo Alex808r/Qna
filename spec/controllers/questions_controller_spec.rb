@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
   let(:question) { create(:question_factory) }
-
+  let(:user) { create(:user) }
   describe 'GET #index' do
     let(:questions) { create_list(:question_factory, 3) }
 
@@ -20,7 +20,6 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #show' do
-    # let(:question) { create(:question_factory) }
     before { get :show, params: { id: question } } # эквивалент get :show, params: {id: question.id}
 
     it 'assigns the requested question to @question' do
@@ -33,6 +32,8 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #new' do
+    # before {sign_in(user)}
+    before {login(user)}
     before { get :new }
 
     it 'assigns a new Question to @question' do
@@ -45,7 +46,7 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #edit' do
-    # let(:question) { create(:question_factory) }
+    before { login(user) }
     before { get :edit, params: { id: question } }
 
     it 'change the requested question to @question' do
@@ -58,6 +59,8 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'POST #create' do
+    before { login(user) }
+  
     context 'with valid attributes' do
       it 'saves a new question in the database' do
         expect { post :create, params: { question: attributes_for(:question_factory) } }
@@ -84,6 +87,8 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'PATCH #update' do
+    before { login(user) }
+  
     context 'with valid attributes' do
       it 'assigns the requested question to @question' do
         patch :update, params: { id: question, question: attributes_for(:question_factory) }
@@ -117,6 +122,8 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
+    before { login(user) }
+  
     let!(:question) { create(:question_factory) }
 
     it 'delete the question' do

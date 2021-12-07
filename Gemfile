@@ -6,6 +6,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.7.2'
 # Slim template engine
 gem 'slim-rails'
+# Devise
+gem 'devise'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.1.4', '>= 6.1.4.1'
@@ -66,6 +68,7 @@ group :test do
   gem 'shoulda-matchers', '~> 5.0'
   gem 'webdrivers'
   gem 'launchy'
+  gem 'capybara-wsl'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
