@@ -9,6 +9,7 @@ feature 'User can view questions', %q{
 } do
   given!(:questions) { create_list(:question_factory, 3) }
   
+  
   scenario 'view all questions' do
     visit questions_path
     expect(page).to have_content 'All Questions'

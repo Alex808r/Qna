@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   sequence :title do |n|
-    "user#{n}@test.com"
+    "Title question N: #{n}"
   end
   
   factory :question_factory, class: Question do
