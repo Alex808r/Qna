@@ -20,12 +20,12 @@ feature 'The user can create an answer to the question ', %q{
       fill_in 'Title', with: 'Answer title'
       fill_in 'Body', with: 'Answer body'
       click_on 'Create Answer'
-      
+
       expect(page).to have_content 'Answer successfully created'
       expect(page).to have_content 'Answer title'
       expect(page).to have_content 'Answer body'
     end
-    
+
     scenario 'tried to create an answer to the question with errors' do
       click_on 'Create Answer'
 
@@ -36,8 +36,7 @@ feature 'The user can create an answer to the question ', %q{
   scenario "Unauthenticated user can't create answer" do
     visit question_path(question)
 
-    #expect(page).to_not have_content 'Create Answer'
+    # expect(page).to_not have_content 'Create Answer'
     expect(page).to_not have_link 'Create answer'
   end
-  
 end

@@ -1,18 +1,36 @@
-p
+
 h1= @question.id
 h1= @question.title
 p= @question.body
+div
+  - if current_user&.author?(@question)
+      p= link_to 'Delete Question',
+          question_path(@question),
+          method: :delete
+
 
 h4 All Answer
-table
-  thead
-    tr
-      th Id
-      th Title
-      th Body
-  tbody
-= render partial: 'answers/answer', collection: @question.answers
-/ = render 'answers/answer', collection: @question.answers
+- if @question.answers.any?
+  div
+    - @question.answers.each do |answer|
+      - if answer.persisted?
+        p= answer.title
+        p= answer.body
+        - if current_user&.author?(answer)
+          p= link_to 'Delete answer',
+                  answer_path(answer),
+                  method: :delete
+
+/ table
+/   thead
+/     tr
+/       th Id
+/       th Title
+/       th Body
+/   tbody
+
+
+  / = render partial: 'answers/answer', collection: @question.answers
 
 -if user_signed_in?
   = render 'answers/form'

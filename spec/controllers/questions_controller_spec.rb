@@ -3,10 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
-  let(:question) { create(:question_factory) }
   let(:user) { create(:user) }
+  let(:question) { create(:question_factory, user: user) }
+
   describe 'GET #index' do
-    let(:questions) { create_list(:question_factory, 3) }
+    let(:questions) { create_list(:question_factory, 3, user: user) }
 
     before { get :index }
 
@@ -110,7 +111,6 @@ RSpec.describe QuestionsController, type: :controller do
       it 'does not change question' do
         patch :update, params: { id: question, question: attributes_for(:question_factory, :invalid) }
         question.reload
-        expect(question.title).to eq 'MyString'
         expect(question.body).to eq 'MyText'
       end
 
@@ -122,17 +122,44 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-    before { login(user) }
+    let!(:question) { create(:question_factory, user: user) }
 
-    let!(:question) { create(:question_factory) }
+    context 'Author questions' do
+      before { login(user) }
 
-    it 'delete the question' do
-      expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
+      it 'delete the question' do
+        expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
+      end
+
+      it 'redirect to index' do
+        delete :destroy, params: { id: question }
+        expect(response).to redirect_to questions_path
+      end
     end
 
-    it 'redirect to index' do
-      delete :destroy, params: { id: question }
-      expect(response).to redirect_to questions_path
+    context 'Not author' do
+      let(:not_author) { create(:user) }
+      before { login(not_author) }
+
+      it 'cannot delete the question' do
+        expect { delete :destroy, params: { id: question } }.to_not change(Question, :count)
+      end
+
+      it 'redirect to @question' do
+        delete :destroy, params: { id: question }
+        expect(response).to redirect_to assigns(:question)
+      end
+    end
+
+    context 'Not registered user' do
+      it 'cannot delete the question' do
+        expect { delete :destroy, params: { id: question } }.to_not change(Question, :count)
+      end
+
+      it 'redirects to sign_in' do
+        delete :destroy, params: { id: question }
+        expect(response).to redirect_to new_user_session_path
+      end
     end
   end
 end

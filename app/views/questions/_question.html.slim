@@ -2,3 +2,6 @@ tr
   th= question.id
   th= question.title
   th= question.body
+  th= link_to 'delete', question_path(question), method: :delete
+  th= link_to 'show', question_path(question)
+

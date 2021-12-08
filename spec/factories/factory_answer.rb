@@ -6,9 +6,9 @@ FactoryBot.define do
   end
   factory :answer do
     association(:question)
+    association(:user)
     title { 'MyAnswer' }
     body
-    # question { :question_factory }
 
     trait :invalid do
       title { nil }

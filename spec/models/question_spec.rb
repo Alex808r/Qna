@@ -3,6 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Question, type: :model do
+  let(:user) { create(:user) }
   let(:question) { build(:question_factory) }
 
   it 'factory should be valid' do
@@ -14,6 +15,7 @@ RSpec.describe Question, type: :model do
     # it {is_expected.to have_many(:answers)} # аналогичная запись
     it { should have_many(:answers) }
     it { should have_many(:answers).dependent(:destroy) }
+    it { should belong_to(:user) }
   end
 
   describe 'validations' do

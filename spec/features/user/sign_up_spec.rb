@@ -24,11 +24,11 @@ feature 'User can sign up', %q{
   end
 
   describe 'User tries to sign up with invalid attribute' do
-    given(:user){create(:user)}
-    
+    given(:user) { create(:user) }
+
     scenario 'without email and password' do
       click_button 'Sign up'
-      
+
       expect(page).to have_content "Email can't be blank"
       expect(page).to have_content "Password can't be blank"
       expect(page).to_not have_content 'Welcome! You have signed up successfully.'
@@ -56,7 +56,7 @@ feature 'User can sign up', %q{
       fill_in 'Password', with: '123456'
       fill_in 'Password confirmation', with: '123456789'
       click_button 'Sign up'
-      
+
       expect(page).to have_content "Password confirmation doesn't match Password"
     end
 
@@ -65,8 +65,8 @@ feature 'User can sign up', %q{
       fill_in 'Password', with: user.password
       fill_in 'Password confirmation', with: user.password_confirmation
       click_button 'Sign up'
-      
-      expect(page).to have_content "Email has already been taken"
-      end
+
+      expect(page).to have_content 'Email has already been taken'
     end
   end
+end
