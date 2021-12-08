@@ -21,17 +21,6 @@ h4 All Answer
                   answer_path(answer),
                   method: :delete
 
-/ table
-/   thead
-/     tr
-/       th Id
-/       th Title
-/       th Body
-/   tbody
-
-
-  / = render partial: 'answers/answer', collection: @question.answers
-
 -if user_signed_in?
   = render 'answers/form'
 
