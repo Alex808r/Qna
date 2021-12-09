@@ -1,5 +1,4 @@
 
-h1= @question.id
 h1= @question.title
 p= @question.body
 div
@@ -7,6 +6,9 @@ div
       p= link_to 'Delete Question',
           question_path(@question),
           method: :delete
+      p= link_to 'Edit Question',
+              edit_question_path(@question)
+
 
 
 h4 All Answer
@@ -20,7 +22,8 @@ h4 All Answer
           p= link_to 'Delete answer',
                   answer_path(answer),
                   method: :delete
+  else
+  p Sorry, there are no answers yet :(
 
 -if user_signed_in?
   = render 'answers/form'
-

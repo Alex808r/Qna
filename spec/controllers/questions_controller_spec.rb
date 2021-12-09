@@ -119,6 +119,18 @@ RSpec.describe QuestionsController, type: :controller do
         expect(response).to render_template :edit
       end
     end
+    
+    context 'Author questions' do
+      let(:not_author) { create(:user) }
+      before { login(not_author) }
+      
+      it 'only author update attibute question' do
+        patch :update, params: { id: question, question: { title: 'not new title', body: 'not new body' } }
+        question.reload
+        expect(question.title).to_not eq 'not new title'
+        expect(question.body).to_not eq 'not new body'
+      end
+    end
   end
 
   describe 'DELETE #destroy' do

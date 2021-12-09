@@ -1,16 +1,9 @@
 # frozen_string_literal: true
 
 class AnswersController < ApplicationController
-  before_action :authenticate_user!, except: %i[new create]
-  before_action :set_question, only: %i[new create]
-  before_action :set_answer, only: %i[show edit update destroy]
-
-  def show; end
-
-  def new
-    @answer = @question.answers.new
-    @answer.user_id = current_user.id
-  end
+  before_action :authenticate_user!, except: %i[create]
+  before_action :set_question, only: %i[create]
+  before_action :set_answer, only: %i[edit update destroy]
 
   def create
     @answer = @question.answers.build(answer_params)

@@ -13,7 +13,7 @@ class QuestionsController < ApplicationController
   end
 
   def new
-    @question = Question.new
+    @question = current_user.questions.new
   end
 
   def edit; end
@@ -28,10 +28,14 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    if @question.update(question_params)
-      redirect_to @question
+    if current_user.author?(@question)
+      if @question.update(question_params)
+        redirect_to @question, notice: 'Your question successfully updated.'
+      else
+        render :edit
+      end
     else
-      render :edit
+      redirect_to @question, notice: 'Cannot update. You are not the author of the question.'
     end
   end
 
