@@ -119,11 +119,11 @@ RSpec.describe QuestionsController, type: :controller do
         expect(response).to render_template :edit
       end
     end
-    
+
     context 'Author questions' do
       let(:not_author) { create(:user) }
       before { login(not_author) }
-      
+
       it 'only author update attibute question' do
         patch :update, params: { id: question, question: { title: 'not new title', body: 'not new body' } }
         question.reload

@@ -12,12 +12,12 @@ RSpec.describe User, type: :model do
     it { should have_many(:answers).dependent(:destroy) }
     it { should have_many(:questions).dependent(:destroy) }
   end
-  
+
   describe 'method author' do
-    let(:it_is_author){create(:user)}
-    let(:not_author){create(:user)}
-    let(:question) {create(:question_factory, user: it_is_author )}
-  
+    let(:it_is_author) { create(:user) }
+    let(:not_author) { create(:user) }
+    let(:question) { create(:question_factory, user: it_is_author) }
+
     it 'user is author' do
       expect(it_is_author).to be_author(question)
     end
