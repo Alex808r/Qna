@@ -13,7 +13,7 @@ div
 
 h4 All Answer
 - if @question.answers.any?
-  div
+  div.answers
     - @question.answers.each do |answer|
       - if answer.persisted?
         p= answer.title
