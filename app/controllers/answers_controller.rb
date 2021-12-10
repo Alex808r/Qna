@@ -1,21 +1,17 @@
 # frozen_string_literal: true
 
 class AnswersController < ApplicationController
-  before_action :set_question, only: %i[new create]
-  before_action :set_answer, only: %i[show edit update]
-
-  def show; end
-
-  def new
-    @answer = @question.answers.new
-  end
+  before_action :authenticate_user!, except: %i[create]
+  before_action :set_question, only: %i[create]
+  before_action :set_answer, only: %i[edit update destroy]
 
   def create
     @answer = @question.answers.build(answer_params)
+    @answer.user = current_user
     if @answer.save
-      redirect_to @answer
+      redirect_to @question, notice: 'Answer successfully created'
     else
-      render :new
+      render 'questions/show'
     end
   end
 
@@ -26,6 +22,15 @@ class AnswersController < ApplicationController
       redirect_to @answer
     else
       render :edit
+    end
+  end
+
+  def destroy
+    if current_user.author?(@answer)
+      @answer.delete
+      redirect_to question_path(@answer.question), notice: 'Your answer successfully deleted'
+    else
+      redirect_to question_path(@answer.question), notice: 'Cannot be deleted. You are not the author of the answer.'
     end
   end
 
