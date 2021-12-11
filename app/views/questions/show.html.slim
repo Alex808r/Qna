@@ -12,18 +12,16 @@ div
 
 
 h4 All Answer
-- if @question.answers.any?
-  div.answers
+.answers
+  - if @question.answers.exists?
     - @question.answers.each do |answer|
       - if answer.persisted?
         p= answer.title
         p= answer.body
         - if current_user&.author?(answer)
-          p= link_to 'Delete answer',
-                  answer_path(answer),
-                  method: :delete
-  else
-  p Sorry, there are no answers yet :(
+          p= link_to 'Delete answer', answer_path(answer), method: :delete
+  - else
+    p Sorry, there are no answers yet :(
 
--if user_signed_in?
+- if user_signed_in?
   = render 'answers/form'

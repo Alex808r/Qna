@@ -8,7 +8,7 @@ feature 'The user can create an answer to the question ', %q{
   I would like to create an answer to the question
 } do
   given(:user) { create(:user) }
-  given(:question) { create(:question_factory) }
+  given!(:question) { create(:question_factory) }
 
   describe 'Authenticated user', js: true do
     background do
@@ -16,7 +16,7 @@ feature 'The user can create an answer to the question ', %q{
       visit question_path(question)
     end
 
-    scenario 'created an answer to the question' do
+    scenario 'created an answer to the question', js: true do
       fill_in 'Title', with: 'Answer title'
       fill_in 'Body', with: 'Answer body'
       click_on 'Create Answer'
@@ -26,6 +26,7 @@ feature 'The user can create an answer to the question ', %q{
       expect(page).to have_content 'Answer body'
       
       expect(current_path).to eq question_path(question)
+      
       within '.answers' do #чтобы убедиться, что ответ в списке, а не в форме
         expect(page).to have_content 'Answer body'
       end
