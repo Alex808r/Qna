@@ -10,7 +10,7 @@ feature 'The user can create an answer to the question ', %q{
   given(:user) { create(:user) }
   given(:question) { create(:question_factory) }
 
-  describe 'Authenticated user' do
+  describe 'Authenticated user', js: true do
     background do
       sign_in(user)
       visit question_path(question)
@@ -31,7 +31,7 @@ feature 'The user can create an answer to the question ', %q{
       end
     end
 
-    scenario 'tried to create an answer to the question with errors' do
+    scenario 'tried to create an answer to the question with errors', js: true do
       click_on 'Create Answer'
 
       expect(page).to have_content "Body can't be blank"
