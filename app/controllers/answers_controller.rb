@@ -10,8 +10,8 @@ class AnswersController < ApplicationController
     @answer.user = current_user
     if @answer.save
       redirect_to @question, notice: 'Answer successfully created'
-    else
-      render 'questions/show'
+      #else
+      #render 'questions/show'
     end
   end
 
