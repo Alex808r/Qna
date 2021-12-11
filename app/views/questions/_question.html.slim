@@ -1,7 +1,19 @@
-tr
-  th= question.title
-  th= question.body
-  th= link_to 'show', question_path(question)
-  th= link_to 'edit', edit_question_path(question)
-  th= link_to 'delete', question_path(question), method: :delete
+/ tr
+/   th= question.title
+/   th= question.body
+/   th= link_to 'show', question_path(question)
+/   th= link_to 'edit', edit_question_path(question)
+/   th= link_to 'delete', question_path(question), method: :delete
 
+
+tr
+  td.text-center[scope="col"]
+    = question.title
+  td.text-center[scope="col"]
+    = question.body
+  th.text-center[scope="col"]
+    = link_to 'show', question_path(question)
+  th.text-center[scope="col"]
+    = link_to 'edit', edit_question_path(question)
+  th.text-center[scope="col"]
+    = link_to 'delete', question_path(question), method: :delete

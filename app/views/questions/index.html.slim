@@ -1,11 +1,22 @@
-h3 All Questions
-table
-  thead
-    tr
-      th Title
-      th Body
-      th Actions
-  tbody
-  = render @questions
+/ h3 All Questions
+/ table
+/   thead
+/     tr
+/       th Title
+/       th Body
+/       th Actions
+/   tbody
+/   = render @questions
+/
+/ p= link_to 'Ask question', new_question_path
 
-p= link_to 'Ask question', new_question_path
+h1.display-4 All Questions
+table.table.table-hover
+  tr.table-primary
+    th.sort-by-title.pointer.text-center[scope="col"]
+      |  Title
+    th.text-center[scope="col"]
+      |  Body
+    th.text-center[colspan="3" scope="col"]
+      = t('.actions')
+  = render @questions
