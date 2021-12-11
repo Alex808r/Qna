@@ -1,7 +1,17 @@
-- if user_signed_in?
-  li=current_user.email
-  li=link_to ('Main'), root_path
-  li=link_to ('Logout'), destroy_user_session_path, method: :delete
--else
-  li =link_to ('Sign up'), new_user_registration_path
-  li =link_to ('Log in'), user_session_path
+.container
+  ul.nav.justify-content-end.mt-3
+    - if user_signed_in?
+      li.nav-item
+        = link_to 'Home', root_path, class: 'nav-link active'
+      li.nav-item
+        a.nav-link.active
+          |  Welcome,
+          b
+            = current_user.email
+      li.nav-item
+        = link_to 'Logout', destroy_user_session_path, method: :delete, class: 'nav-link active'
+    - else
+      li.nav-item
+        = link_to 'Sign up', new_user_registration_path, class: 'nav-link active'
+      li.nav-item
+        = link_to 'Log in', user_session_path, class: 'nav-link active'
