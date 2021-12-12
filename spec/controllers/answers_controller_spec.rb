@@ -19,7 +19,6 @@ RSpec.describe AnswersController, type: :controller do
       it 'render template create' do
         post :create, params: { question_id: question, answer: attributes_for(:answer), format: :js }
         expect(response).to render_template :create
-        # expect(response).to redirect_to assigns(:question)
       end
     end
 
@@ -44,7 +43,7 @@ RSpec.describe AnswersController, type: :controller do
       expect(assigns(:answer)).to eq answer
     end
 
-    it 'render edit view' do
+    it 'render template edit' do
       expect(response).to render_template :edit
     end
   end
@@ -53,22 +52,24 @@ RSpec.describe AnswersController, type: :controller do
     let!(:answer) { create(:answer, question: question, user: user) }
     
     context 'Author update answer' do
-    before { login(user) }
+      before { login(user) }
+      
       context 'with valid attributes' do
-        # it 'assigns the requested answer to @answer' do
-        #   patch :update, params: { question_id: question, id: answer, answer: attributes_for(:answer) }
-        #   expect(assigns(:answer)).to eq answer
-        # end
+        it 'assigns the requested answer to @answer' do
+          patch :update, params: { question_id: question, id: answer, answer: attributes_for(:answer) }, format: :js
+          expect(assigns(:answer)).to eq answer
+        end
   
         it 'changes answer attributes' do
           patch :update,
-                params: { question_id: question, id: answer, answer: { title: 'new answer', body: 'new answer' } }, format: :js
+                params: { question_id: question, id: answer, answer: { title: 'new answer', body: 'new answer' } },
+                format: :js
           answer.reload
           expect(answer.title).to eq 'new answer'
           expect(answer.body).to eq 'new answer'
         end
   
-        it 'renders update view' do
+        it 'render template update' do
           patch :update, params: { question_id: question, id: answer, answer: attributes_for(:answer) }, format: :js
           expect(response).to render_template :update
         end
@@ -76,12 +77,13 @@ RSpec.describe AnswersController, type: :controller do
   
       context 'with invalid attributes' do
         it 'does not change answer' do
-          patch :update, params: { question_id: question, id: answer, answer: attributes_for(:answer, :invalid) } , format: :js
+          patch :update, params: { question_id: question, id: answer, answer: attributes_for(:answer, :invalid) },
+                format: :js
           answer.reload
           expect(answer.title).to eq 'MyAnswer'
         end
   
-        it 're-renders update view' do
+        it 're-renders template update' do
           patch :update, params: { question_id: question, id: answer, answer: attributes_for(:answer, :invalid) }, format: :js
           expect(response).to render_template :update
         end
@@ -113,13 +115,13 @@ RSpec.describe AnswersController, type: :controller do
     context 'Author answers' do
       before { login(user) }
 
-      it 'deletes the answer' do
-        expect { delete :destroy, params: { id: answer } }.to change(question.answers, :count).by(-1)
+      it 'delete the answer' do
+        expect { delete :destroy, params: { id: answer }, format: :js }.to change(question.answers, :count).by(-1)
       end
 
-      it 'redirects to question' do
-        delete :destroy, params: { id: answer }
-        expect(response).to redirect_to question_path(question)
+      it 'render template destroy' do
+        delete :destroy, params: { id: answer, format: :js }
+        expect(response).to render_template :destroy
       end
     end
 
@@ -128,18 +130,13 @@ RSpec.describe AnswersController, type: :controller do
       before { login(not_author) }
 
       it 'tries to delete answer' do
-        expect { delete :destroy, params: { id: answer } }.to_not change(question.answers, :count)
-      end
-
-      it 'redirects to index' do
-        delete :destroy, params: { id: answer }
-        expect(response).to redirect_to question_path(question)
+        expect { delete :destroy, params: { id: answer, format: :js } }.to_not change(question.answers, :count)
       end
     end
 
     context 'Not registered user' do
       it 'tries to delete answer' do
-        expect { delete :destroy, params: { id: answer } }.to_not change(question.answers, :count)
+        expect { delete :destroy, params: { id: answer, format: :js } }.to_not change(question.answers, :count)
       end
 
       it 'redirects to sign_in' do

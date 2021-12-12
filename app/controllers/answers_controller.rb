@@ -9,7 +9,7 @@ class AnswersController < ApplicationController
     @answer = @question.answers.build(answer_params)
     @answer.user = current_user
     if @answer.save
-      flash[:notice] = 'Answer successfully created'
+      flash.now[:notice] = 'Answer successfully created'
     end
   end
 
@@ -20,19 +20,13 @@ class AnswersController < ApplicationController
       @answer.update(answer_params)
       @question = @answer.question
     end
-    # if @answer.update(answer_params)
-    #   redirect_to @answer
-    # else
-    #   render :edit
-    # end
   end
 
   def destroy
     if current_user.author?(@answer)
       @answer.delete
-      redirect_to question_path(@answer.question), notice: 'Your answer successfully deleted'
-    else
-      redirect_to question_path(@answer.question), notice: 'Cannot be deleted. You are not the author of the answer.'
+      flash.now[:notice] = 'Your answer successfully deleted'
+      @question = @answer.question
     end
   end
 
