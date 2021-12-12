@@ -16,7 +16,7 @@ RSpec.describe AnswersController, type: :controller do
           .to change(question.answers, :count).by(1)
       end
 
-      it 'redirects to show view' do
+      it 'render template create' do
         post :create, params: { question_id: question, answer: attributes_for(:answer), format: :js }
         expect(response).to render_template :create
         # expect(response).to redirect_to assigns(:question)
@@ -29,7 +29,7 @@ RSpec.describe AnswersController, type: :controller do
           .not_to change(Answer, :count)
       end
 
-      it 're-renders new view' do
+      it 're-renders create template' do
         post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid), format: :js }
         expect(response).to render_template :create
       end
@@ -50,38 +50,59 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'PATCH #update' do
+    let!(:answer) { create(:answer, question: question, user: user) }
+    
+    context 'Author update answer' do
     before { login(user) }
-
-    context 'with valid attributes' do
-      it 'assigns the requested answer to @answer' do
-        patch :update, params: { question_id: question, id: answer, answer: attributes_for(:answer) }
-        expect(assigns(:answer)).to eq answer
+      context 'with valid attributes' do
+        # it 'assigns the requested answer to @answer' do
+        #   patch :update, params: { question_id: question, id: answer, answer: attributes_for(:answer) }
+        #   expect(assigns(:answer)).to eq answer
+        # end
+  
+        it 'changes answer attributes' do
+          patch :update,
+                params: { question_id: question, id: answer, answer: { title: 'new answer', body: 'new answer' } }, format: :js
+          answer.reload
+          expect(answer.title).to eq 'new answer'
+          expect(answer.body).to eq 'new answer'
+        end
+  
+        it 'renders update view' do
+          patch :update, params: { question_id: question, id: answer, answer: attributes_for(:answer) }, format: :js
+          expect(response).to render_template :update
+        end
       end
-
-      it 'changes answer attributes' do
-        patch :update,
-              params: { question_id: question, id: answer, answer: { title: 'new answer', body: 'new answer' } }
+  
+      context 'with invalid attributes' do
+        it 'does not change answer' do
+          patch :update, params: { question_id: question, id: answer, answer: attributes_for(:answer, :invalid) } , format: :js
+          answer.reload
+          expect(answer.title).to eq 'MyAnswer'
+        end
+  
+        it 're-renders update view' do
+          patch :update, params: { question_id: question, id: answer, answer: attributes_for(:answer, :invalid) }, format: :js
+          expect(response).to render_template :update
+        end
+      end
+    end
+    
+    context 'Not author' do
+      let(:not_author) { create :user }
+      before { login(not_author) }
+      it 'tries to update answer' do
+        patch :update, params: { id: answer, answer: { body: 'new body' }, format: :js }
         answer.reload
-        expect(answer.title).to eq 'new answer'
-        expect(answer.body).to eq 'new answer'
-      end
-
-      it 'redirect to updated answer' do
-        patch :update, params: { question_id: question, id: answer, answer: attributes_for(:answer) }
-        expect(response).to redirect_to answer
+        expect(answer.body).to_not eq 'new body'
       end
     end
 
-    context 'with invalid attributes' do
-      it 'does not change answer' do
-        patch :update, params: { question_id: question, id: answer, answer: attributes_for(:answer, :invalid) }
+    context 'Not registered user' do
+      it 'tries to update answer' do
+        patch :update, params: { id: answer, answer: { body: 'new body' }, format: :js }
         answer.reload
-        expect(answer.title).to eq 'MyAnswer'
-      end
-
-      it 're-renders edit view' do
-        patch :update, params: { question_id: question, id: answer, answer: attributes_for(:answer, :invalid) }
-        expect(response).to render_template :edit
+        expect(answer.body).to_not eq 'new body'
       end
     end
   end

@@ -1,12 +1,12 @@
-h4 New Answer
-.answer-errors
-  = render 'shared/errors', resource: @answer
-= form_with model: [@question, @answer], local: false do |f|
-  p
-  = f.label :title
-  = f.text_field :title, class: 'form-control'
-  p
-  = f.label :body
-  = f.text_area :body, class: 'form-control'
-  p
-  = f.submit 'Create Answer'
+/ h4 New Answer
+/ .answer-errors
+/   = render 'shared/errors', resource: @answer
+/ = form_with model: [@question, @answer], local: false do |f|
+/   p
+/   = f.label :title
+/   = f.text_field :title, class: 'form-control'
+/   p
+/   = f.label :body
+/   = f.text_area :body, class: 'form-control'
+/   p
+/   = f.submit 'Create Answer'

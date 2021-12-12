@@ -1,29 +1,30 @@
 # frozen_string_literal: true
 
 class AnswersController < ApplicationController
-  before_action :authenticate_user!, except: %i[create]
+  before_action :authenticate_user!, except: %i[create edit update]
   before_action :set_question, only: %i[create]
   before_action :set_answer, only: %i[edit update destroy]
 
   def create
-    @answer = @question.answers.build(answer_params.merge(user: current_user))
-    # @answer.user = current_user
+    @answer = @question.answers.build(answer_params)
+    @answer.user = current_user
     if @answer.save
-      flash.now[:notice] = 'Answer successfully created'
-      # redirect_to @question, notice: 'Answer successfully created'
-      #else
-      #render 'questions/show'
+      flash[:notice] = 'Answer successfully created'
     end
   end
 
   def edit; end
 
   def update
-    if @answer.update(answer_params)
-      redirect_to @answer
-    else
-      render :edit
+    if current_user&.author?(@answer)
+      @answer.update(answer_params)
+      @question = @answer.question
     end
+    # if @answer.update(answer_params)
+    #   redirect_to @answer
+    # else
+    #   render :edit
+    # end
   end
 
   def destroy
