@@ -6,10 +6,11 @@ class AnswersController < ApplicationController
   before_action :set_answer, only: %i[edit update destroy]
 
   def create
-    @answer = @question.answers.build(answer_params)
-    @answer.user = current_user
+    @answer = @question.answers.build(answer_params.merge(user: current_user))
+    # @answer.user = current_user
     if @answer.save
-      redirect_to @question, notice: 'Answer successfully created'
+      flash.now[:notice] = 'Answer successfully created'
+      # redirect_to @question, notice: 'Answer successfully created'
       #else
       #render 'questions/show'
     end
