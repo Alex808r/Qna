@@ -17,7 +17,7 @@ class QuestionsController < ApplicationController
     @question = current_user.questions.new
   end
 
-  def edit; end
+  # def edit; end
 
   def create
     @question = current_user.questions.new(question_params)
@@ -30,13 +30,8 @@ class QuestionsController < ApplicationController
 
   def update
     if current_user.author?(@question)
-      if @question.update(question_params)
-        redirect_to @question, notice: 'Your question successfully updated.'
-      else
-        render :edit
-      end
-    else
-      redirect_to @question, notice: 'Cannot update. You are not the author of the question.'
+      @question.update(question_params)
+      flash.now[:notice] = 'Your question successfully updated.'
     end
   end
 

@@ -1,18 +1,21 @@
 / tr
-/   th= question.title
-/   th= question.body
-/   th= link_to 'show', question_path(question)
-/   th= link_to 'edit', edit_question_path(question)
-/   th= link_to 'delete', question_path(question), method: :delete
+/   td.text-center[scope="col"] = question.title
+/   |  |
+/   td.text-center[scope="col"] = question.body
+p = question.title
+p = question.body
 
-tr
-  td.text-center[scope="col"]
-    = question.title
-  td.text-center[scope="col"]
-    = question.body
-  th.text-center[scope="col"]
-    = link_to 'show', question_path(question)
-  th.text-center[scope="col"]
-    = link_to 'edit', edit_question_path(question)
-  th.text-center[scope="col"]
-    = link_to 'delete', question_path(question), method: :delete
+- if current_user&.author?(question)
+  p= link_to 'Edit Question', '#', class: 'edit-question-link', data: { question_id: question.id }
+  p= link_to 'Delete Question', question_path(question), method: :delete
+
+.question-errors
+  = render 'shared/errors', resource: question
+
+= form_with model: question, class: 'hidden', html: {id: "edit-question-#{question.id}"}, local: false do |f|
+  = f.label :title
+  = f.text_area :title, class: 'form-control'
+  = f.label :body
+  = f.text_area :body, class: 'form-control'
+  = f.submit 'Save update question', class: 'btn btn-primary'
+

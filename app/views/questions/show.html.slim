@@ -1,11 +1,6 @@
+.question
+  = render @question
 
-h1= @question.title
-p= @question.body
-
-.notice
-  - if current_user&.author?(@question)
-    p= link_to 'Edit Question',   edit_question_path(@question)
-    p= link_to 'Delete Question', question_path(@question), method: :delete
 hr
 
 

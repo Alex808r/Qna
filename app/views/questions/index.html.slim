@@ -18,5 +18,9 @@ table.table.table-hover
     th.text-center[scope="col"]
       |  Body
     th.text-center[colspan="3" scope="col"]
-      = t('.actions')
-  = render @questions
+      |  Actions
+  tr
+  - @questions.each do |question|
+    td.text-center[scope="col"] = question.title
+    td.text-center[scope="col"] = question.body
+    td.text-center[scope="col"] = link_to 'show', question_path(question)
