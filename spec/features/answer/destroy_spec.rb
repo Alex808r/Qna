@@ -18,7 +18,7 @@ feature 'User can delete answer', %q{
     expect(page).to have_content answer.body
 
     click_on 'Delete answer'
-    expect(page).to have_content 'Your answer successfully deleted'
+    # expect(page).to have_content 'Your answer successfully deleted'
     expect(page).to_not have_content(answer.body)
   end
 

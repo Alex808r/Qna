@@ -109,7 +109,7 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
-  describe '#destroy' do
+  describe 'DELETE #destroy' do
     let!(:answer) { create(:answer, question: question, user: user) }
 
     context 'Author answers' do
