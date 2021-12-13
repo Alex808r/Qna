@@ -8,9 +8,7 @@ class AnswersController < ApplicationController
   def create
     @answer = @question.answers.build(answer_params)
     @answer.user = current_user
-    if @answer.save
-      flash.now[:notice] = 'Answer successfully created'
-    end
+    flash.now[:notice] = 'Answer successfully created' if @answer.save
   end
 
   def edit; end

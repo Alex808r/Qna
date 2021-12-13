@@ -50,16 +50,16 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'PATCH #update' do
     let!(:answer) { create(:answer, question: question, user: user) }
-    
+
     context 'Author update answer' do
       before { login(user) }
-      
+
       context 'with valid attributes' do
         it 'assigns the requested answer to @answer' do
           patch :update, params: { question_id: question, id: answer, answer: attributes_for(:answer) }, format: :js
           expect(assigns(:answer)).to eq answer
         end
-  
+
         it 'changes answer attributes' do
           patch :update,
                 params: { question_id: question, id: answer, answer: { title: 'new answer', body: 'new answer' } },
@@ -68,28 +68,29 @@ RSpec.describe AnswersController, type: :controller do
           expect(answer.title).to eq 'new answer'
           expect(answer.body).to eq 'new answer'
         end
-  
+
         it 'render template update' do
           patch :update, params: { question_id: question, id: answer, answer: attributes_for(:answer) }, format: :js
           expect(response).to render_template :update
         end
       end
-  
+
       context 'with invalid attributes' do
         it 'does not change answer' do
           patch :update, params: { question_id: question, id: answer, answer: attributes_for(:answer, :invalid) },
-                format: :js
+                         format: :js
           answer.reload
           expect(answer.title).to eq 'MyAnswer'
         end
-  
+
         it 're-renders template update' do
-          patch :update, params: { question_id: question, id: answer, answer: attributes_for(:answer, :invalid) }, format: :js
+          patch :update, params: { question_id: question, id: answer, answer: attributes_for(:answer, :invalid) },
+                         format: :js
           expect(response).to render_template :update
         end
       end
     end
-    
+
     context 'Not author' do
       let(:not_author) { create :user }
       before { login(not_author) }

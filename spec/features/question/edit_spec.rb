@@ -6,8 +6,7 @@ feature 'User can edit his question', %q{
   In order to correct mistakes
   As an author of question
   I'd like to be adle to edit my question
-}do
-  
+} do
   given!(:user) { create(:user) }
   given(:not_author) { create(:user) }
   given!(:question) { create(:question_factory, user: user) }
@@ -19,7 +18,7 @@ feature 'User can edit his question', %q{
       expect(page).to_not have_link 'Edit Question'
     end
   end
-    
+
   describe 'Authenticated user', js: true do
     context 'Author question' do
       background do
@@ -29,11 +28,11 @@ feature 'User can edit his question', %q{
         click_on 'Edit Question'
       end
       scenario 'edit his question' do
-        within '.question' do #чтобы убедиться, что впорос в списке, а не в форме
+        within '.question' do # чтобы убедиться, что впорос в списке, а не в форме
           fill_in 'Title', with: 'edited title'
           fill_in 'Body',  with: 'edited body'
           click_on 'Save update question'
-    
+
           expect(page).to_not have_content answer.body
           expect(page).to have_content 'edited title'
           expect(page).to have_content 'edited body'
@@ -41,21 +40,21 @@ feature 'User can edit his question', %q{
         end
       end
       scenario 'edit question with errors' do
-        within '.question' do #чтобы убедиться, что ответ в списке, а не в форме
+        within '.question' do # чтобы убедиться, что ответ в списке, а не в форме
           fill_in 'Title', with: ''
           fill_in 'Body', with: ''
           click_on 'Save update question'
-    
+
           expect(page).to have_content(question.body)
           expect(page).to have_selector 'textarea'
         end
-  
+
         within '.question-errors' do
           expect(page).to have_content "Body can't be blank"
         end
       end
     end
-    
+
     context 'Not author' do
       scenario 'tries to edit other users question' do
         sign_in(not_author)
