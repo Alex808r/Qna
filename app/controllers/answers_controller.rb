@@ -14,18 +14,18 @@ class AnswersController < ApplicationController
   def edit; end
 
   def update
-    if current_user&.author?(@answer)
-      @answer.update(answer_params)
-      @question = @answer.question
-    end
+    return unless current_user&.author?(@answer)
+
+    @answer.update(answer_params)
+    @question = @answer.question
   end
 
   def destroy
-    if current_user.author?(@answer)
-      @answer.delete
-      flash.now[:notice] = 'Your answer successfully deleted'
-      @question = @answer.question
-    end
+    return unless current_user&.author?(@answer)
+
+    @answer.delete
+    @question = @answer.question
+    flash.now[:notice] = 'Your answer successfully deleted'
   end
 
   private

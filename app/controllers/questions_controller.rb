@@ -29,10 +29,10 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    if current_user.author?(@question)
-      @question.update(question_params)
-      flash.now[:notice] = 'Your question successfully updated.'
-    end
+    return unless current_user&.author?(@question)
+
+    @question.update(question_params)
+    flash.now[:notice] = 'Your question successfully updated.'
   end
 
   def destroy
