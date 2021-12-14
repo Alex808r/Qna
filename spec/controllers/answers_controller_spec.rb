@@ -148,4 +148,21 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
   end
+  
+  describe 'POST #best_answer' do
+    let(:not_author_question) { create(:user) }
+    let!(:question) { create(:question_factory, user: user) }
+    let!(:answer) { create(:answer, question: question, user: user) }
+    let!(:answer_2) { create(:answer, question: question, user: not_author_question) }
+
+    context 'The author of the question' do
+      before { login(user) }
+      
+      it 'can choose the best answer' do
+        post :best_answer, params: { id: answer, format: :js }
+        question.reload
+        expect(question.best_answer).to eq answer
+      end
+    end
+  end
 end
