@@ -1,5 +1,6 @@
 p = question.title
 p = question.body
+p = question.best_answer.title
 
 - if current_user&.author?(question)
   p= link_to 'Edit Question', '#', class: 'edit-question-link', data: { question_id: question.id }

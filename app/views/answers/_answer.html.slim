@@ -3,7 +3,7 @@ p= answer.title
 p= answer.body
 
 -if current_user&.author?(@question)
-  p= link_to 'Best answer', '#'
+  p= link_to 'Best answer', best_answer_answer_path(answer), method: :post
 
 -if current_user&.author?(answer)
   p= link_to 'Edit answer', '#', class: 'edit-answer-link', data: {answer_id: answer.id}
