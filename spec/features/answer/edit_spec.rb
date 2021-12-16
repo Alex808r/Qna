@@ -18,6 +18,7 @@ feature 'User can edit his answer', %q{
   end
 
   describe 'Authenticated user' do
+    
     context 'Author answer' do
       background do
         sign_in(user)

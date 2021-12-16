@@ -159,9 +159,18 @@ RSpec.describe AnswersController, type: :controller do
       before { login(user) }
       
       it 'can choose the best answer' do
-        post :best_answer, params: { id: answer, format: :js }
+        post :best_answer, params: {id: answer, format: :js }
         question.reload
         expect(question.best_answer).to eq answer
+      end
+    end
+    
+    context 'Not the author of the question' do
+      before { login(not_author_question) }
+      it 'can not choose the best answer' do
+        post :best_answer, params: {id: answer, format: :js }
+        question.reload
+        expect(question.best_answer).to_not eq answer
       end
     end
   end
