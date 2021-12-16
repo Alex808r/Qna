@@ -32,7 +32,19 @@ class AnswersController < ApplicationController
     @question = @answer.question
     return unless current_user&.author?(@question)
     @question.update(best_answer_id: @answer.id)
-    redirect_to question_path(@question)
+    @best_answer = @question.best_answer
+    @other_answers = @question.answers.where.not(id: @question.best_answer_id)
+    # @question = @answer.question
+    # return unless current_user&.author?(@question)
+    # if @question.best_answer.nil?
+    #   @question.update(best_answer_id: @answer.id)
+    #
+    #   @best_answer = @question.best_answer
+    #   @other_answers = @question.answers.where.not(id: @question.best_answer_id)
+    # else
+    #   @question.update(best_answer_id: nil)
+    #   @other_answers = @question.answers.where.not(id: @question.best_answer_id)
+    # end
   end
 
   private
