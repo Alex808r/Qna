@@ -1,6 +1,16 @@
-p = question.title
-p = question.body
-p = question.best_answer.title
+p
+  |  Title:
+  = question.title
+p
+  |  Body:
+  = question.body
+p
+  |  Best_answer_title
+  = question.best_answer&.title
+
+p
+  | Author question:
+  = question.user.email
 
 - if current_user&.author?(question)
   p= link_to 'Edit Question', '#', class: 'edit-question-link', data: { question_id: question.id }
@@ -15,4 +25,3 @@ p = question.best_answer.title
   = f.label :body
   = f.text_area :body, class: 'form-control'
   = f.submit 'Save update question', class: 'btn btn-primary'
-

@@ -3,14 +3,14 @@ h4= link_to 'Ask question', new_question_path
 h1.display-4 All Questions
 table.table.table-hover
   tr.table-primary
-    th.sort-by-title.pointer.text-center[scope="col"]
+    th.text-center[scope="col"]
       |  Title
     th.text-center[scope="col"]
       |  Body
-    th.text-center[colspan="3" scope="col"]
+    th.text-center[colspan="1" scope="col"]
       |  Actions
-  tr
   - @questions.each do |question|
-    td.text-center[scope="col"] = question.title
-    td.text-center[scope="col"] = question.body
-    td.text-center[scope="col"] = link_to 'show', question_path(question)
+    tr
+      td.text-center[scope="col"] = question.title
+      td.text-center[scope="col"] = question.body
+      td.text-center[scope="col"] = link_to 'show', question_path(question)
