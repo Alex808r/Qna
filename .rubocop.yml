@@ -31,3 +31,6 @@ Style/PercentLiteralDelimiters:
 
 Style/RedundantPercentQ:
   Enabled: false
+
+Naming/VariableNumber:
+  EnforcedStyle: snake_case

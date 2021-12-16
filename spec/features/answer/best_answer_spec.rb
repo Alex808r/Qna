@@ -27,6 +27,7 @@ feature 'The user can choose the best answer to the question', %q{
           expect(page).to have_link 'Best answer'
           click_on 'Best answer'
           expect(page).to have_content 'The best answer'
+          expect(page).to have_content answer.title
         end
       end
     end

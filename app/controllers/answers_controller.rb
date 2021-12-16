@@ -27,10 +27,11 @@ class AnswersController < ApplicationController
     @question = @answer.question
     flash.now[:notice] = 'Your answer successfully deleted'
   end
-  
+
   def best_answer
     @question = @answer.question
     return unless current_user&.author?(@question)
+
     @question.update(best_answer_id: @answer.id)
     @best_answer = @question.best_answer
     @other_answers = @question.answers.where.not(id: @question.best_answer_id)
