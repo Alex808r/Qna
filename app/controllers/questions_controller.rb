@@ -9,8 +9,9 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    # @answer = @question.answers.new
     @answer = Answer.new
+    @best_answer = @question.best_answer
+    @other_answers = @question.answers.where.not(id: @question.best_answer)
   end
 
   def new
