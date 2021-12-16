@@ -1,0 +1,6 @@
+<%# if @best_answer %>
+  $('.answers').html('<%= j render 'answers/best_answer', resource: @best_answer %>');
+  $('.answers').append('<%= j render @other_answers %>');
+<%# else %>
+  // $('.answers').html('<%#= j render @question.answers %>');
+<%# end %>
