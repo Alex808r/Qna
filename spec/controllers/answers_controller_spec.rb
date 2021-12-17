@@ -163,10 +163,16 @@ RSpec.describe AnswersController, type: :controller do
         question.reload
         expect(question.best_answer).to eq answer
       end
+
+      it 'render template best answer' do
+        post :best_answer, params: { id: answer, format: :js }
+        expect(response).to render_template :best_answer
+      end
     end
 
     context 'Not the author of the question' do
       before { login(not_author_question) }
+
       it 'can not choose the best answer' do
         post :best_answer, params: { id: answer, format: :js }
         question.reload
