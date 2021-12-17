@@ -1,5 +1,15 @@
 $('.answer-errors').html('<%= render 'shared/errors', resource: @answer %>');
-<% unless @answer.errors.present? %>
-  $('.answers').html('<%= j render 'answers/best_answer', resource: @question.best_answer %>');
-  $('.answers').append('<%= j render @question.answers %>');
+
+<% if @answer.errors.empty? %>
+  <% if @question.best_answer.present?%>
+    $('.answers').html('<%= j render 'answers/best_answer', resource: @question.best_answer %>');
+    $('.answers').append('<%= j render @question.answers %>');
+  <% else %>
+    $('.answers').html('<%= j render @question.answers %>');
+  <% end %>
 <% end %>
+
+<%# unless @answer.errors.present? %>
+//  $('.answers').html('<%#= j render 'answers/best_answer', resource: @question.best_answer %>');
+//  $('.answers').append('<%#= j render @question.answers %>');
+<%# end %>
