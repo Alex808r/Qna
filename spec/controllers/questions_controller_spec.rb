@@ -34,6 +34,10 @@ RSpec.describe QuestionsController, type: :controller do
     it 'assigns the new answer' do
       expect(assigns(:answer)).to be_a_new(Answer)
     end
+
+    it 'assigns the @best_answer' do
+      expect(assigns(:best_answer)).to eq question.best_answer
+    end
   end
 
   describe 'GET #new' do
