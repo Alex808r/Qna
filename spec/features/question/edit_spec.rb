@@ -13,7 +13,7 @@ feature 'User can edit his question', %q{
   given!(:answer) { create(:answer, question: question, user: user) }
 
   describe 'Unauthenticated user' do
-    scenario "can't edit question to current question page(template show)" do
+    scenario 'can not edit question to current question page(template show)' do
       visit questions_path(question)
       expect(page).to_not have_link 'Edit Question'
     end
