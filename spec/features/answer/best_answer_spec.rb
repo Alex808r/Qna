@@ -12,9 +12,11 @@ feature 'The user can choose the best answer to the question', %q{
   given!(:question) { create(:question_factory, user: user) }
   given!(:answer) { create(:answer, question: question, user: not_author) }
 
-  scenario "Unauthenticated user can't choose the best answer", js: true do
-    visit questions_path(question)
-    expect(page).to_not have_link 'Best answer'
+  describe 'Unauthenticated user' do
+    scenario 'can not choose the best answer', js: true do
+      visit questions_path(question)
+      expect(page).to_not have_link 'Best answer'
+    end
   end
 
   describe 'Authenticated user', js: true do

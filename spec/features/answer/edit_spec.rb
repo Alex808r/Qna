@@ -12,9 +12,11 @@ feature 'User can edit his answer', %q{
   given!(:question) { create(:question_factory) }
   given!(:answer) { create(:answer, question: question, user: user) }
 
-  scenario "Unauthenticated user can't edit answer" do
-    visit questions_path(question)
-    expect(page).to_not have_link 'Edit answer'
+  describe 'Unauthenticated user' do
+    scenario 'can not edit answer' do
+      visit questions_path(question)
+      expect(page).to_not have_link 'Edit answer'
+    end
   end
 
   describe 'Authenticated user' do
@@ -47,6 +49,7 @@ feature 'User can edit his answer', %q{
         end
 
         within '.answer-errors' do
+          expect(page).to have_content "Title can't be blank"
           expect(page).to have_content "Body can't be blank"
         end
       end

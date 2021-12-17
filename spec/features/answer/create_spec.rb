@@ -39,10 +39,11 @@ feature 'The user can create an answer to the question ', %q{
     end
   end
 
-  scenario "Unauthenticated user can't create answer" do
-    visit question_path(question)
+  describe 'Unauthenticated user' do
+    scenario 'can not create answer' do
+      visit question_path(question)
 
-    # expect(page).to_not have_content 'Create Answer'
-    expect(page).to_not have_link 'Create answer'
+      expect(page).to_not have_link 'Create answer'
+    end
   end
 end
