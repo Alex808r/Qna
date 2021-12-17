@@ -37,7 +37,7 @@ class AnswersController < ApplicationController
     @other_answers = @question.answers.where.not(id: @question.best_answer_id)
     # @question = @answer.question
     # return unless current_user&.author?(@question)
-    # if @question.best_answer.nil?
+    # if @question.best_answer.nil? || @question.best_answer == @answer.id
     #   @question.update(best_answer_id: @answer.id)
     #
     #   @best_answer = @question.best_answer
