@@ -8,6 +8,6 @@ class Question < ApplicationRecord
   validates :title, :body, presence: true
 
   def set_best_answer(answer)
-    update(best_answer_id: answer.id)
+    update(best_answer: answer)
   end
 end
