@@ -33,4 +33,11 @@ RSpec.describe Question, type: :model do
       expect(question.best_answer).to_not eq(question.answers.second)
     end
   end
+
+  describe 'database' do
+    it { should have_db_index(:best_answer_id) }
+    it { should have_db_column(:best_answer_id).with_options(null: true) }
+    it { should have_db_column(:best_answer_id).of_type(:integer) }
+    it { should have_db_column(:user_id).with_options(null: false) }
+  end
 end
