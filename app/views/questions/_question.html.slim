@@ -1,7 +1,27 @@
-tr
-  th= question.title
-  th= question.body
-  th= link_to 'show', question_path(question)
-  th= link_to 'edit', edit_question_path(question)
-  th= link_to 'delete', question_path(question), method: :delete
+p
+  |  Title:
+  = question.title
+p
+  |  Body:
+  = question.body
+p
+  |  Best_answer_title
+  = question.best_answer&.title
 
+p
+  | Author question:
+  = question.user.email
+
+- if current_user&.author?(question)
+  p= link_to 'Edit Question', '#', class: 'edit-question-link', data: { question_id: question.id }
+  p= link_to 'Delete Question', question_path(question), method: :delete
+
+.question-errors
+  = render 'shared/errors', resource: question
+
+= form_with model: question, class: 'hidden', html: {id: "edit-question-#{question.id}"}, local: false do |f|
+  = f.label :title
+  = f.text_area :title, class: 'form-control'
+  = f.label :body
+  = f.text_area :body, class: 'form-control'
+  = f.submit 'Save update question', class: 'btn btn-primary'

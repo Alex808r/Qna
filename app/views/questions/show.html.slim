@@ -1,29 +1,24 @@
+.question
+  = render @question
 
-h1= @question.title
-p= @question.body
-div
-  - if current_user&.author?(@question)
-      p= link_to 'Delete Question',
-          question_path(@question),
-          method: :delete
-      p= link_to 'Edit Question',
-              edit_question_path(@question)
+hr
 
+h4 All Answers
+.answers
+  - if @question.best_answer
+    = render 'answers/best_answer', resource: @best_answer
+  = render @other_answers
 
-
-h4 All Answer
-- if @question.answers.any?
-  div
-    - @question.answers.each do |answer|
-      - if answer.persisted?
-        p= answer.title
-        p= answer.body
-        - if current_user&.author?(answer)
-          p= link_to 'Delete answer',
-                  answer_path(answer),
-                  method: :delete
-  else
-  p Sorry, there are no answers yet :(
-
--if user_signed_in?
-  = render 'answers/form'
+- if user_signed_in?
+  h4 New Answer
+  .answer-errors
+    = render 'shared/errors', resource: @answer
+  = form_with model: [@question, @answer], local: false, class: 'new-answer' do |f|
+    p
+    = f.label :title
+    = f.text_field :title, class: 'form-control'
+    p
+    = f.label :body
+    = f.text_area :body, class: 'form-control'
+    p
+    = f.submit 'Create Answer'

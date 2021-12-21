@@ -5,6 +5,14 @@ require:
 AllCops:
   NewCops: enable
   TargetRubyVersion: 2.7
+  Exclude:
+    - 'bin/*'
+    - 'db/schema.rb'
+    - 'db/migrate/*'
+    - 'log/**/*'
+    - 'public/**/*'
+    - 'tmp/**/*'
+    - 'config/initializers/*'
 
 Style/Documentation:
   Enabled: false
@@ -23,3 +31,6 @@ Style/PercentLiteralDelimiters:
 
 Style/RedundantPercentQ:
   Enabled: false
+
+Naming/VariableNumber:
+  EnforcedStyle: snake_case

@@ -1,1 +1,20 @@
+= render 'shared/flash_message'
+p= answer.title
+p= answer.body
 
+-if current_user&.author?(@question)
+  p= link_to 'Best answer', best_answer_answer_path(answer), method: :post, remote: true
+
+-if current_user&.author?(answer)
+  p= link_to 'Edit answer', '#', class: 'edit-answer-link', data: {answer_id: answer.id}
+  p= link_to 'Delete answer', answer_path(answer), method: :delete, remote: true
+
+= form_with model: answer, class: 'hidden', html: {id: "edit-answer-#{answer.id}"}, local: false do |f|
+  p
+  = f.label :title
+  = f.text_field :title, class: 'form-control'
+  p
+  = f.label :body
+  = f.text_area :body, class: 'form-control'
+  p
+  = f.submit 'Save'

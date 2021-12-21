@@ -9,7 +9,9 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @answer = @question.answers.new
+    @answer = Answer.new
+    @best_answer = @question.best_answer
+    @other_answers = @question.answers.where.not(id: @question.best_answer)
   end
 
   def new
@@ -28,15 +30,10 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    if current_user.author?(@question)
-      if @question.update(question_params)
-        redirect_to @question, notice: 'Your question successfully updated.'
-      else
-        render :edit
-      end
-    else
-      redirect_to @question, notice: 'Cannot update. You are not the author of the question.'
-    end
+    return unless current_user&.author?(@question)
+
+    @question.update(question_params)
+    flash.now[:notice] = 'Your question successfully updated.'
   end
 
   def destroy

@@ -1,0 +1,20 @@
+/ p= link_to 'remove Best answer!', best_answer_answer_path(resource), method: :post, remote: true
+
+- if resource&.persisted?
+    h1 The best answer
+    p= resource.title
+    p= resource.body
+
+
+- if current_user&.author?(resource)
+  p= link_to 'Edit answer', '#', class: 'edit-answer-link', data: { answer_id: resource.id }
+  p= link_to 'Delete answer', answer_path(resource), method: :delete, remote: true
+
+  = form_with model: resource, class: 'hidden', html: { id: "edit-answer-#{resource.id}" }, local: false do |f|
+    = f.label :title
+    = f.text_area :title, class: 'form-control'
+    = f.label :body
+    = f.text_area :body, class: 'form-control'
+    = f.submit 'Save'
+
+hr
