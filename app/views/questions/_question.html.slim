@@ -11,6 +11,9 @@ p
 p
   | Author question:
   = question.user.email
+-if question.file.attached?
+  |  File:
+  = link_to question.file.filename.to_s, url_for(question.file)
 
 - if current_user&.author?(question)
   p= link_to 'Edit Question', '#', class: 'edit-question-link', data: { question_id: question.id }
