@@ -12,6 +12,10 @@ RSpec.describe Question, type: :model do
     expect(question).to be_valid
   end
 
+  it 'have one attached file' do
+    expect(Question.new.file).to be_an_instance_of(ActiveStorage::Attached::One)
+  end
+
   describe 'associations' do
     # it {is_expected.to have_many(:answers)} # аналогичная запись
     it { should have_many(:answers) }
