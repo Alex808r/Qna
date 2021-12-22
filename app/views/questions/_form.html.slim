@@ -6,7 +6,7 @@
   = f.label :body
   = f.text_area :body, class: 'form-control'
   p
-  = f.label :file
-  = f.file_field :file, class: 'form-control'
+  = f.label :files
+  = f.file_field :files, class: 'form-control', multiple: true
   p
   = f.submit 'Ask', class: 'btn btn-primary'
