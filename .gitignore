@@ -40,3 +40,6 @@ yarn-debug.log*
 
 # Ignore config RM
 .idea
+
+# Ignore variables
+.env
