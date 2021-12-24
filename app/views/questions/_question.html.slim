@@ -28,4 +28,6 @@ p
   = f.text_area :title, class: 'form-control'
   = f.label :body
   = f.text_area :body, class: 'form-control'
+  = f.label :files
+  = f.file_field :files, class: 'form-control', multiple: true, direct_upload: true
   = f.submit 'Save update question', class: 'btn btn-primary'
