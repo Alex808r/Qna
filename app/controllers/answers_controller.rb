@@ -50,6 +50,6 @@ class AnswersController < ApplicationController
 
   def set_answer
     # @answer = @question.answers.find(params[:id])
-    @answer = Answer.with_attached_files.find(params[:id])
+    @answer = Answer.with_attached_answer_files.find(params[:id])
   end
 end
