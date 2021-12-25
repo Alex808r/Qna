@@ -1,5 +1,5 @@
-- if resource.answer_files.attached?
-  - resource.answer_files.each do |file|
+- if resource.files.attached?
+  - resource.files.each do |file|
     p id="attachment_#{file.id}"
       = link_to file.filename.to_s, url_for(file), target: '_blank'
       |  |

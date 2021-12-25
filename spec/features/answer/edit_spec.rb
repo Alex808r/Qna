@@ -58,15 +58,15 @@ feature 'User can edit his answer', %q{
         within '.answers' do # чтобы убедиться, что ответ в списке, а не в форме
           fill_in 'Title', with: 'edited title'
           fill_in 'Body', with: 'edited body'
-          attach_file 'Answer files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+          attach_file 'Files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
           click_on 'Save'
 
           expect(page).to_not have_content answer.body
           expect(page).to have_content 'edited title'
           expect(page).to have_content 'edited body'
           expect(page).to_not have_selector 'textarea'
-          expect(page).to have_link answer.answer_files.first.filename.to_s
-          expect(page).to have_link answer.answer_files.second.filename.to_s
+          expect(page).to have_link answer.files.first.filename.to_s
+          expect(page).to have_link answer.files.second.filename.to_s
         end
       end
     end

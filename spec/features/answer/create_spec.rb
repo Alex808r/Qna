@@ -42,7 +42,7 @@ feature 'The user can create an answer to the question ', %q{
       fill_in 'Title', with: 'Answer title'
       fill_in 'Body', with: 'Answer body'
 
-      attach_file 'Answer files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+      attach_file 'Files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
 
       click_on 'Create Answer'
 

@@ -1,7 +1,7 @@
 = render 'shared/flash_message'
 p= answer.title
 p= answer.body
--if answer.answer_files.attached?
+-if answer.files.attached?
   |  File:
   = render 'shared/attachments', resource: answer
   / - answer.answer_files.each do |file|
@@ -23,7 +23,7 @@ p= answer.body
   = f.label :body
   = f.text_area :body, class: 'form-control'
   p
-  = f.label :answer_files
-  = f.file_field :answer_files, class: 'form-control', multiple: true, direct_upload: true
+  = f.label :files
+  = f.file_field :files, class: 'form-control', multiple: true, direct_upload: true
   p
   = f.submit 'Save'

@@ -10,7 +10,7 @@ RSpec.describe Answer, type: :model do
   end
 
   it 'have many attached file' do
-    expect(Answer.new.answer_files).to be_an_instance_of(ActiveStorage::Attached::Many)
+    expect(Answer.new.files).to be_an_instance_of(ActiveStorage::Attached::Many)
   end
 
   describe 'associations' do

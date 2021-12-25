@@ -13,8 +13,10 @@ p
   = question.user.email
 -if question.files.attached?
   |  File:
-  - question.files.each do |file|
-    li= link_to file.filename.to_s, url_for(file), target: '_blank'
+  = render 'shared/attachments', resource: question
+  / - question.files.each do |file|
+    / li= link_to file.filename.to_s, url_for(file), target: '_blank'
+
 
 - if current_user&.author?(question)
   p= link_to 'Edit Question', '#', class: 'edit-question-link', data: { question_id: question.id }

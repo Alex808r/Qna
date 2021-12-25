@@ -58,6 +58,6 @@ feature 'User can delete answer', %q{
   end
 
   def file_name(item)
-    item.answer_files.first.filename.to_s
+    item.files.first.filename.to_s
   end
 end
