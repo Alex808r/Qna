@@ -44,7 +44,7 @@ feature 'User can delete answer', %q{
         sign_in(not_author)
         visit question_path(question)
       end
-      
+
       scenario 'can not delete answer', js: true do
         expect(page).to_not have_link 'Delete answer'
       end
@@ -57,7 +57,7 @@ feature 'User can delete answer', %q{
 
   describe 'Unauthenticated user' do
     background { visit question_path(question) }
-    
+
     scenario 'can not delete answer', js: true do
       expect(page).to_not have_link 'Delete answer'
     end
