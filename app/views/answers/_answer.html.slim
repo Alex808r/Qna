@@ -3,8 +3,9 @@ p= answer.title
 p= answer.body
 -if answer.answer_files.attached?
   |  File:
-  - answer.answer_files.each do |file|
-    li= link_to file.filename.to_s, url_for(file), target: '_blank'
+  = render 'shared/attachments', resource: answer
+  / - answer.answer_files.each do |file|
+  /   li= link_to file.filename.to_s, url_for(file), target: '_blank'
 
 
 -if current_user&.author?(@question)

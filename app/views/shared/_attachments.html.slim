@@ -1,0 +1,7 @@
+- if resource.answer_files.attached?
+  - resource.answer_files.each do |file|
+    p id="attachment_#{file.id}"
+      = link_to file.filename.to_s, url_for(file), target: '_blank'
+      |  |
+      - if current_user&.author?(file.record)
+        = link_to 'Delete file', attachment_path(file), method: :delete, remote: true, class: 'btn btn-danger'
