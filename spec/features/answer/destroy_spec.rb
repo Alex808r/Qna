@@ -40,20 +40,30 @@ feature 'User can delete answer', %q{
     end
 
     context 'Not author' do
-      scenario 'can not delete answer', js: true do
+      background do
         sign_in(not_author)
         visit question_path(question)
-
+      end
+      
+      scenario 'can not delete answer', js: true do
         expect(page).to_not have_link 'Delete answer'
+      end
+
+      scenario 'can not delete files', js: true do
+        expect(page).to_not have_link 'Delete file'
       end
     end
   end
 
   describe 'Unauthenticated user' do
+    background { visit question_path(question) }
+    
     scenario 'can not delete answer', js: true do
-      visit question_path(question)
-
       expect(page).to_not have_link 'Delete answer'
+    end
+
+    scenario 'can not delete files', js: true do
+      expect(page).to_not have_link 'Delete file'
     end
   end
 
