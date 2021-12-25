@@ -13,5 +13,13 @@ FactoryBot.define do
     trait :invalid do
       title { nil }
     end
+
+    trait :with_file do
+      file_path = "#{Rails.root}/spec/rails_helper.rb"
+  
+      after :create do |answer|
+        answer.answer_files.attach(io: File.open(file_path), filename: 'rails_helper.rb')
+      end
+    end
   end
 end
