@@ -1,6 +1,12 @@
 = render 'shared/flash_message'
 p= answer.title
 p= answer.body
+-if answer.files.attached?
+  |  File:
+  = render 'shared/attachments', resource: answer
+  / - answer.answer_files.each do |file|
+  /   li= link_to file.filename.to_s, url_for(file), target: '_blank'
+
 
 -if current_user&.author?(@question)
   p= link_to 'Best answer', best_answer_answer_path(answer), method: :post, remote: true
@@ -16,5 +22,8 @@ p= answer.body
   p
   = f.label :body
   = f.text_area :body, class: 'form-control'
+  p
+  = f.label :files
+  = f.file_field :files, class: 'form-control', multiple: true, direct_upload: true
   p
   = f.submit 'Save'
