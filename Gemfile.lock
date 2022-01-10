@@ -120,6 +120,9 @@ GEM
       railties (>= 5.0.0)
     ffi (1.15.4)
     ffi (1.15.4-x64-mingw32)
+    fuubar (2.5.1)
+      rspec-core (~> 3.0)
+      ruby-progressbar (~> 1.4)
     globalid (1.0.0)
       activesupport (>= 5.0)
     i18n (1.8.11)
@@ -323,6 +326,7 @@ DEPENDENCIES
   devise
   dotenv-rails
   factory_bot_rails
+  fuubar
   jbuilder (~> 2.7)
   launchy
   listen (~> 3.3)
