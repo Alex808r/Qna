@@ -3,7 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe Answer, type: :model do
-  let(:answer) { build(:question_factory) }
+  let(:question){create(:question_factory)}
+  let(:answer) { build(:answer, question: question ) }
   # валидна ли фабрика
   it 'factory should be valid' do
     expect(answer).to be_valid
