@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Link, type: :model do
   let(:question) { create(:question_factory) }
-  let(:links) { create(:link, question: question) }
+  let(:links) { create(:link, linkable: question) }
 
   # валидна ли фабрика
   it 'factory should be valid' do
@@ -12,7 +12,7 @@ RSpec.describe Link, type: :model do
   end
 
   describe 'associations' do
-    it { should belong_to(:question) }
+    it { should belong_to(:linkable) }
   end
 
   describe 'validations' do
@@ -21,7 +21,8 @@ RSpec.describe Link, type: :model do
   end
 
   describe 'database' do
-    it { should have_db_index(:question_id) }
-    it { should have_db_column(:question_id).of_type(:integer) }
+    it { should have_db_index(%i[linkable_type linkable_id]) }
+    it { should have_db_column(:linkable_id).of_type(:integer) }
+    it { should have_db_column(:linkable_type).of_type(:string) }
   end
 end

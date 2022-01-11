@@ -35,6 +35,10 @@ RSpec.describe QuestionsController, type: :controller do
       expect(assigns(:answer)).to be_a_new(Answer)
     end
 
+    it 'assigns the new link for answer' do
+      expect(assigns(:answer).links.first).to be_a_new(Link)
+    end
+
     it 'assigns the @best_answer' do
       expect(assigns(:best_answer)).to eq question.best_answer
     end

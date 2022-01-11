@@ -1,6 +1,12 @@
 = render 'shared/flash_message'
 p= answer.title
 p= answer.body
+
+.links
+  p Links:
+  - answer.links.each do |link|
+    li= link_to link.name.to_s, link.url, target: '_blank'
+
 -if answer.files.attached?
   |  File:
   = render 'shared/attachments', resource: answer

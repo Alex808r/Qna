@@ -3,11 +3,15 @@
 require 'rails_helper'
 
 RSpec.describe Answer, type: :model do
-  let(:question){create(:question_factory)}
-  let(:answer) { build(:answer, question: question ) }
+  let(:question) { create(:question_factory) }
+  let(:answer) { build(:answer, question: question) }
   # валидна ли фабрика
   it 'factory should be valid' do
     expect(answer).to be_valid
+  end
+
+  describe 'have nested links' do
+    it { should accept_nested_attributes_for :links }
   end
 
   it 'have many attached file' do
@@ -17,6 +21,7 @@ RSpec.describe Answer, type: :model do
   describe 'associations' do
     it { should belong_to(:question) }
     it { should belong_to(:user) }
+    it { should have_many(:links).dependent(:destroy) }
   end
 
   describe 'validations' do
