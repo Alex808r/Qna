@@ -4,11 +4,11 @@ require 'rails_helper'
 
 RSpec.describe Link, type: :model do
   let(:question) { create(:question_factory) }
-  let(:link) { create(:link, question: question) }
+  let(:links) { create(:link, question: question) }
 
   # валидна ли фабрика
   it 'factory should be valid' do
-    expect(link).to be_valid
+    expect(links).to be_valid
   end
 
   describe 'associations' do
