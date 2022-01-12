@@ -6,6 +6,7 @@ RSpec.describe Link, type: :model do
   let(:question) { create(:question_factory) }
   let(:links) { create(:link, linkable: question) }
   let(:invalid_links) { build(:link, :invalid, linkable: question) }
+  let(:gist_link) { create(:link, :with_gist, linkable: question) }
 
   # валидна ли фабрика
   it 'factory should be valid' do
@@ -40,5 +41,15 @@ RSpec.describe Link, type: :model do
     it { should respond_to(:name) }
     it { should respond_to(:linkable) }
     it { expect(links.linkable).to eq question }
+  end
+  
+  describe 'link' do
+    it 'has gist' do
+      expect(gist_link.gist?).to be_truthy # or be true
+    end
+
+    it 'has not gist' do
+      expect(links.gist?).to be_falsey # or be fasle
+    end
   end
 end

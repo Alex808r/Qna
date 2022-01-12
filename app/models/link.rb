@@ -8,4 +8,8 @@ class Link < ApplicationRecord
 
   validates :url, format: { with: URI::DEFAULT_PARSER.make_regexp(%w[http https]), message: 'is invalid' }
   # validates :url, format: { with: URI.regexp(%w[http https]), message: 'is invalid' } # аналогичная запись
+
+  def gist?
+    URI(url).host.include?('gist')
+  end
 end

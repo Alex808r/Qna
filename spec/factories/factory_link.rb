@@ -10,5 +10,9 @@ FactoryBot.define do
       name { 'MyString' }
       url { 'MyString' }
     end
+
+    trait :with_gist do
+      url { 'https://gist.github.com' }
+    end
   end
 end
