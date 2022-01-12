@@ -34,4 +34,11 @@ RSpec.describe Link, type: :model do
     it { should have_db_column(:linkable_id).of_type(:integer) }
     it { should have_db_column(:linkable_type).of_type(:string) }
   end
+
+  describe 'polymorphic' do
+    it { should respond_to(:url) }
+    it { should respond_to(:name) }
+    it { should respond_to(:linkable) }
+    it { expect(links.linkable).to eq question }
+  end
 end
