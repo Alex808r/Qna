@@ -99,6 +99,7 @@ GEM
       dotenv
       launchy (>= 2.0)
     childprocess (4.1.0)
+    cocoon (1.2.15)
     concurrent-ruby (1.1.9)
     crass (1.0.6)
     devise (4.8.0)
@@ -323,6 +324,7 @@ DEPENDENCIES
   byebug
   capybara (>= 3.26)
   capybara-wsl
+  cocoon
   devise
   dotenv-rails
   factory_bot_rails
