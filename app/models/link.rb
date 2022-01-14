@@ -12,4 +12,9 @@ class Link < ApplicationRecord
   def gist?
     URI(url).host.include?('gist')
   end
+
+  def open_gist
+    http_client = Octokit::Client.new
+    http_client.gist(URI.parse(url).path.split('/').last).files
+  end
 end
