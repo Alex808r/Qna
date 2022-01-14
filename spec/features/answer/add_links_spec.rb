@@ -9,7 +9,7 @@ feature 'User can add links to answer', %q{
 } do
   given(:user) { create(:user) }
   given!(:question) { create(:question_factory, user: user) }
-  given(:gist_url) { 'https://gist.github.com/vkurennov/743f9367caa1039874af5a2244e1b44c' }
+  given(:gist_url) { 'https://gist.github.com/Alex808r/aaf1e1b6d10820d619ec95d3cc411ec6' }
   given(:thinknetica_url) { 'https://thinknetica.com/' }
   given(:invalid_url) { 'Invalid_url' }
 
@@ -40,7 +40,19 @@ feature 'User can add links to answer', %q{
       end
     end
 
-    scenario 'with valid url', js: true do
+    scenario 'open gist url', js: true do
+      fill_in 'Link name', with: 'My gist'
+      fill_in 'Url', with: gist_url
+
+      click_on 'Create Answer'
+
+      within '.answers' do
+        expect(page).to have_link 'My gist', href: gist_url
+        expect(page).to have_content 'Hello, world!'
+      end
+    end
+
+    scenario 'with invalid url', js: true do
       fill_in 'Link name', with: 'Invalid'
       fill_in 'Url', with: invalid_url
 

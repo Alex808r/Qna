@@ -8,7 +8,7 @@ feature 'User can add links to question', %q{
   I'd like to be able to add links
 } do
   given(:user) { create(:user) }
-  given(:gist_url) { 'https://gist.github.com/vkurennov/743f9367caa1039874af5a2244e1b44c' }
+  given(:gist_url) { 'https://gist.github.com/Alex808r/aaf1e1b6d10820d619ec95d3cc411ec6' }
   given(:thinknetica_url) { 'https://thinknetica.com/' }
   given(:invalid_url) { 'Invalid_url' }
 
@@ -36,6 +36,18 @@ feature 'User can add links to question', %q{
       within '.question' do
         expect(page).to have_link 'My gist', href: gist_url
         expect(page).to have_link 'Thinknetica', href: thinknetica_url
+      end
+    end
+
+    scenario 'open gist url', js: true do
+      fill_in 'Link name', with: 'My gist'
+      fill_in 'Url', with: gist_url
+
+      click_on 'Ask'
+
+      within '.question' do
+        expect(page).to have_link 'My gist', href: gist_url
+        expect(page).to have_content 'Hello, world!'
       end
     end
 

@@ -20,6 +20,8 @@ RSpec.describe Link, type: :model do
   describe 'validations' do
     it { should validate_presence_of :name }
     it { should validate_presence_of :url }
+    it { should allow_value('https://gist.github.com').for(:url) }
+    it { should_not allow_value('invalid url').for(:url) }
 
     it 'valid url' do
       expect(links).to be_valid
@@ -42,7 +44,7 @@ RSpec.describe Link, type: :model do
     it { should respond_to(:linkable) }
     it { expect(links.linkable).to eq question }
   end
-  
+
   describe 'link' do
     it 'has gist' do
       expect(gist_link.gist?).to be_truthy # or be true
