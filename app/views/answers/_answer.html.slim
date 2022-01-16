@@ -1,14 +1,7 @@
 = render 'shared/flash_message'
 p= answer.title
 p= answer.body
-
-.links
-  p Links:
-  - answer.links.each do |link|
-      li= link_to link.name.to_s, link.url, target: '_blank'
-      - if link.gist?
-        - link.open_gist.each do |_file_name, text|
-          p=text.content
+= render 'links/links_collection', resource: answer
 
 -if answer.files.attached?
   |  File:
@@ -35,4 +28,6 @@ p= answer.body
   = f.label :files
   = f.file_field :files, class: 'form-control', multiple: true, direct_upload: true
   p
+  p
+  = render 'links/link', resource: answer, f: f
   = f.submit 'Save'
