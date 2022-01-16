@@ -7,8 +7,8 @@ FactoryBot.define do
     url { 'https://thinknetica.com' }
 
     trait :invalid do
-      name { 'MyString' }
-      url { 'MyString' }
+      name { 'Invalid link' }
+      url { 'Invalid link' }
     end
 
     trait :with_gist do
