@@ -7,10 +7,12 @@ feature 'The user can choose the best answer to the question', %q{
   As the author of the question
   I would like to choose the best answer to a question
 } do
-  given!(:user) { create(:user) }
-  given!(:not_author) { create(:user) }
-  given!(:question) { create(:question_factory, user: user) }
+  given(:user) { create(:user) }
+  given(:not_author) { create(:user) }
+  given(:question) { create(:question_factory, user: user) }
+  given(:question_with_reward) { create(:question_factory, :with_reward, user: user) }
   given!(:answer) { create(:answer, question: question, user: not_author) }
+  given(:rewarded_answer) {create(:answer, question: question_with_reward, user: not_author)}
 
   describe 'Unauthenticated user' do
     scenario 'can not choose the best answer', js: true do
@@ -31,6 +33,19 @@ feature 'The user can choose the best answer to the question', %q{
           expect(page).to have_content 'The best answer'
           expect(page).to have_content answer.title
         end
+      end
+
+      scenario 'give an reward for the best answer' do
+        sign_in(user)
+        visit question_path(rewarded_answer.question)
+
+        click_on 'Best answer'
+
+        question_with_reward.reload
+        # save_and_open_page_wsl
+        # sleep 1
+        expect(page).to have_content(question_with_reward.title)
+        expect(question_with_reward.reward.user).to eq not_author
       end
     end
 
