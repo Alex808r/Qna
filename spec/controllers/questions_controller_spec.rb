@@ -60,6 +60,10 @@ RSpec.describe QuestionsController, type: :controller do
     it 'render new view' do
       expect(response).to render_template :new
     end
+
+    it 'assigns a new Reward to @question' do
+      expect(assigns(:question).reward).to be_a_new(Reward)
+    end
   end
 
   describe 'GET #edit' do

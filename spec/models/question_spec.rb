@@ -14,6 +14,7 @@ RSpec.describe Question, type: :model do
 
   describe 'have nested file' do
     it { should accept_nested_attributes_for :links }
+    it { should accept_nested_attributes_for :reward }
   end
 
   it 'have many attached file' do
@@ -25,6 +26,7 @@ RSpec.describe Question, type: :model do
     it { should have_many(:answers) }
     it { should have_many(:answers).dependent(:destroy) }
     it { should have_many(:links).dependent(:destroy) }
+    it { should have_one(:reward).dependent(:destroy) }
     it { should belong_to(:user) }
   end
 

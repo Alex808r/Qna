@@ -9,6 +9,8 @@
   = f.label :files
   = f.file_field :files, class: 'form-control', multiple: true, direct_upload: true
   = render 'links/link', resource: @question, f: f
+  = render 'reward_form', f: f
+
   br
   / p Links:
   / p

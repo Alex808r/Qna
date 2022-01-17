@@ -7,7 +7,11 @@ p
 p
   |  Best_answer_title
   = question.best_answer&.title
-
+p
+  |  Reward to best answer:
+p
+-if question.reward.present?
+  = image_tag question.reward.image, size: '90x80'
 p
   | Author question:
   = question.user.email
