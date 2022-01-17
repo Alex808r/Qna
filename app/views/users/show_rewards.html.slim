@@ -1,0 +1,15 @@
+h3 My Rewards:
+- if @rewards.present?
+  - @rewards.each do |reward|
+    .reward
+      |  Question title:
+      = reward.question.title
+      p
+      |  Question author:
+      = reward.question.user.email
+      p
+      |  Reward name:
+      = reward.name
+      p
+      - if reward.image.attached?
+        = image_tag reward.image, size: '90x80'

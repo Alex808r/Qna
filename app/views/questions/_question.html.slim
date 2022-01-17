@@ -21,13 +21,6 @@ p
   / - question.files.each do |file|
     / li= link_to file.filename.to_s, url_for(file), target: '_blank'
 = render 'links/links_collection', resource: question
-/ .links
-/   p Links:
-/   - question.links.each do |link|
-/     li= link_to link.name.to_s, link.url, target: '_blank'
-/     - if link.gist?
-/       - link.open_gist.each do |_file_name, text|
-/         p=text.content
 
 - if current_user&.author?(question)
   p= link_to 'Edit Question', '#', class: 'edit-question-link', data: { question_id: question.id }
