@@ -10,16 +10,5 @@
   = f.file_field :files, class: 'form-control', multiple: true, direct_upload: true
   = render 'links/link', resource: @question, f: f
   = render 'reward_form', f: f
-
   br
-  / p Links:
-  / p
-  /   = f.fields_for :links do |l|
-  /     p
-  /     = l.label :name, 'Link name'
-  /     = l.text_field :name
-  /     p
-  /     = l.label :url
-  /     = l.text_field :url
-
   = f.submit 'Ask', class: 'btn btn-primary'
