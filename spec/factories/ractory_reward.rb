@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :reward do
     file_path = "#{Rails.root}/app/assets/images/reward_img.png"
-    
+
     name { 'MyReward' }
     association(:question)
     after :create do |reward|
