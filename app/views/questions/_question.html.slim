@@ -10,16 +10,14 @@ p
 p
   |  Reward to best answer:
 p
-/ -if question&.reward.present?
-/   = image_tag question.reward.image, size: '90x80'
+-if question&.reward.present?
+  = image_tag question.reward.image, size: '90x80'
 p
   | Author question:
   = question.user.email
 -if question.files.attached?
   |  File:
   = render 'shared/attachments', resource: question
-  / - question.files.each do |file|
-    / li= link_to file.filename.to_s, url_for(file), target: '_blank'
 = render 'links/links_collection', resource: question
 
 - if current_user&.author?(question)
