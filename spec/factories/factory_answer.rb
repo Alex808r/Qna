@@ -19,6 +19,13 @@ FactoryBot.define do
 
       after :create do |answer|
         answer.files.attach(io: File.open(file_path), filename: 'rails_helper.rb')
+        # create(:link, linkable: answer)
+      end
+    end
+
+    trait :with_link do
+      after :create do |answer|
+        create(:link, linkable: answer)
       end
     end
   end

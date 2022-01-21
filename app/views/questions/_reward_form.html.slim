@@ -1,0 +1,9 @@
+h4 Reward:
+.reward
+  = f.fields_for :reward do |r|
+    = r.label :name, 'Reward name'
+    = r.text_field :name, class: 'form-control'
+
+    = r.label :image
+    = r.file_field :image, class: 'form-control', direct_upload: true
+    br

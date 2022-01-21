@@ -12,6 +12,11 @@ RSpec.describe Question, type: :model do
     expect(question).to be_valid
   end
 
+  describe 'have nested file' do
+    it { should accept_nested_attributes_for :links }
+    it { should accept_nested_attributes_for :reward }
+  end
+
   it 'have many attached file' do
     expect(Question.new.files).to be_an_instance_of(ActiveStorage::Attached::Many)
   end
@@ -20,6 +25,8 @@ RSpec.describe Question, type: :model do
     # it {is_expected.to have_many(:answers)} # аналогичная запись
     it { should have_many(:answers) }
     it { should have_many(:answers).dependent(:destroy) }
+    it { should have_many(:links).dependent(:destroy) }
+    it { should have_one(:reward).dependent(:destroy) }
     it { should belong_to(:user) }
   end
 

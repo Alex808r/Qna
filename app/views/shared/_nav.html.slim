@@ -4,6 +4,8 @@
       li.nav-item
         = link_to 'Home', root_path, class: 'nav-link active'
       li.nav-item
+        = link_to 'My Rewards', show_rewards_user_path(current_user), class: 'nav-link active'
+      li.nav-item
         a.nav-link.active
           |  Welcome,
           b

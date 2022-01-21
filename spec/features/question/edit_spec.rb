@@ -9,7 +9,7 @@ feature 'User can edit his question', %q{
 } do
   given!(:user) { create(:user) }
   given(:not_author) { create(:user) }
-  given!(:question) { create(:question_factory, user: user) }
+  given!(:question) { create(:question_factory, :with_link, user: user) }
   given!(:answer) { create(:answer, question: question, user: user) }
 
   describe 'Unauthenticated user' do
@@ -24,9 +24,9 @@ feature 'User can edit his question', %q{
       background do
         sign_in(user)
         visit question_path(question)
-        # save_and_open_page_wsl
         click_on 'Edit Question'
       end
+
       scenario 'edit his question' do
         within '.question' do # чтобы убедиться, что впорос в списке, а не в форме
           fill_in 'Title', with: 'edited title'
@@ -39,6 +39,7 @@ feature 'User can edit his question', %q{
           expect(page).to_not have_selector 'textarea'
         end
       end
+
       scenario 'edit question with errors' do
         within '.question' do # чтобы убедиться, что ответ в списке, а не в форме
           fill_in 'Title', with: ''
@@ -69,11 +70,23 @@ feature 'User can edit his question', %q{
           expect(page).to have_link question.files.second.filename.to_s
         end
       end
+
+      scenario 'edit his question with link' do
+        within '.question' do
+          expect(page).to have_link 'MyString', href: 'https://thinknetica.com'
+          fill_in 'Link name', with: 'New link'
+          fill_in 'Url', with: 'http://ya.ru'
+          click_on 'Save'
+        end
+        expect(page).not_to have_link 'MyString', href: 'https://thinknetica.com'
+        expect(page).to have_link 'New link', href: 'http://ya.ru'
+      end
     end
 
     context 'Not author' do
       scenario 'tries to edit other users question' do
         sign_in(not_author)
+        visit question_path(question)
         expect(page).to_not have_link 'Edit Question'
       end
     end

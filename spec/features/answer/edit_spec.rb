@@ -10,7 +10,8 @@ feature 'User can edit his answer', %q{
   given!(:user) { create(:user) }
   given(:not_author) { create(:user) }
   given!(:question) { create(:question_factory) }
-  given!(:answer) { create(:answer, question: question, user: user) }
+  # given(:answer) { create(:answer, question: question, user: user) }
+  given(:answer_with_link) { create(:answer, :with_link, question: question, user: user) }
 
   describe 'Unauthenticated user' do
     scenario 'can not edit answer' do
@@ -23,7 +24,7 @@ feature 'User can edit his answer', %q{
     context 'Author answer' do
       background do
         sign_in(user)
-        visit question_path(question)
+        visit question_path(answer_with_link.question)
         click_on 'Edit answer'
       end
       scenario 'edit his answer', js: true do
@@ -32,7 +33,7 @@ feature 'User can edit his answer', %q{
           fill_in 'Body', with: 'edited body'
           click_on 'Save'
 
-          expect(page).to_not have_content answer.body
+          expect(page).to_not have_content answer_with_link.body
           expect(page).to have_content 'edited title'
           expect(page).to have_content 'edited body'
           expect(page).to_not have_selector 'textarea'
@@ -44,7 +45,7 @@ feature 'User can edit his answer', %q{
           fill_in 'Body', with: ''
           click_on 'Save'
 
-          expect(page).to have_content(answer.body)
+          expect(page).to have_content(answer_with_link.body)
           expect(page).to have_selector 'textarea'
         end
 
@@ -61,20 +62,37 @@ feature 'User can edit his answer', %q{
           attach_file 'Files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
           click_on 'Save'
 
-          expect(page).to_not have_content answer.body
+          expect(page).to_not have_content answer_with_link.body
           expect(page).to have_content 'edited title'
           expect(page).to have_content 'edited body'
           expect(page).to_not have_selector 'textarea'
-          expect(page).to have_link answer.files.first.filename.to_s
-          expect(page).to have_link answer.files.second.filename.to_s
+          expect(page).to have_link answer_with_link.files.first.filename.to_s
+          expect(page).to have_link answer_with_link.files.second.filename.to_s
         end
+      end
+
+      scenario 'edit his answer with link', js: true do
+        within '.answers' do
+          expect(page).to have_link 'MyString', href: 'https://thinknetica.com'
+          fill_in 'Link name', with: 'New link'
+          fill_in 'Url', with: 'http://ya.ru'
+          click_on 'Save'
+        end
+        expect(page).not_to have_link 'MyString', href: 'https://thinknetica.com'
+        expect(page).to have_link 'New link', href: 'http://ya.ru'
       end
     end
 
     context 'Not author answer' do
-      scenario 'tries to edit other users answer' do
+      background do
         sign_in(not_author)
-        expect(page).to_not have_link 'Edit answer'
+        visit question_path(answer_with_link.question)
+      end
+
+      scenario 'tries to edit other users answer' do
+        within '.answers' do
+          expect(page).not_to have_link 'Edit answer'
+        end
       end
     end
   end

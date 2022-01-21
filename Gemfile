@@ -12,6 +12,12 @@ gem 'devise'
 # Amazon S3
 gem 'aws-sdk-s3', require: false
 
+# nested forms
+gem 'cocoon'
+
+# Gists API NETWORKING
+gem 'octokit', '~> 4.0'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.1.4', '>= 6.1.4.1'
 # Use postgresql as the database for Active Record
@@ -70,6 +76,7 @@ group :test do
   gem 'selenium-webdriver'
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'capybara-wsl'
+  gem 'fuubar'
   gem 'launchy'
   gem 'rails-controller-testing'
   gem 'shoulda-matchers', '~> 5.0'

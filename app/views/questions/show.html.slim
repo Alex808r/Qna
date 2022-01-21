@@ -23,5 +23,9 @@ h4 All Answers
     p
     = f.label :files
     = f.file_field :files, class: 'form-control', multiple: true, direct_upload: true
-    p
+    .answer-links
+      = render 'links/link', resource: @answer, f: f
+    br
     = f.submit 'Create Answer'
+p
+  = link_to 'Back', root_path
