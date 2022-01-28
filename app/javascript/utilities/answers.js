@@ -6,12 +6,15 @@ $(document).on('turbolinks:load', function(){
         $('form#edit-answer-' + answerId).removeClass('hidden');
     })
     $('form.new-answer').on('ajax:success', function(e){
-        // console.log(e);
-        var xhr = e.detail[2];
-        $('.answers').append(xhr.responseText);
+        // console.log(e.detail);
+        var answer = e.detail[0];
+        $('.answers').append('<p>' + answer.title + '</p>');
+        $('.answers').append('<p>' + answer.body + '</p>');
     })
         .on('ajax:error', function(e) {
-            var xhr = e.detail[2]
-            $('.answer-errors').html(xhr.responseText);
+            var errors = e.detail[0]
+            $.each(errors, function (index, value) {
+                $('.answer-errors').append('<p>' + value + '</p>');
+            })
         })
 });
