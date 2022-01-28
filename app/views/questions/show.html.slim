@@ -13,7 +13,7 @@ h4 All Answers
   h4 New Answer
   .answer-errors
     = render 'shared/errors', resource: @answer
-  = form_with model: [@question, @answer], local: false, class: 'new-answer' do |f|
+  = form_with model: [@question, @answer], local: false, class: 'new-answer', data: {type: :html} do |f|
     p
     = f.label :title
     = f.text_field :title, class: 'form-control'

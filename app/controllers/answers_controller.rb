@@ -9,6 +9,14 @@ class AnswersController < ApplicationController
     @answer = @question.answers.build(answer_params)
     @answer.user = current_user
     flash.now[:notice] = 'Answer successfully created' if @answer.save
+
+    respond_to do |format|
+      if @answer.save
+        format.html { render @answer }
+      else
+        format.html { render partial: 'shared/errors', locals: { resource: @answer }, status: :unprocessable_entity }
+      end
+    end
   end
 
   def edit; end
