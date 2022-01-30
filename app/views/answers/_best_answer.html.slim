@@ -4,6 +4,7 @@
     h1 The best answer
     p= resource.title
     p= resource.body
+    p= render 'shared/vote', resource: resource
 
 
 - if current_user&.author?(resource)

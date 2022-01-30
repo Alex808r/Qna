@@ -1,38 +1,42 @@
-p
-  |  Title:
-  = question.title
-p
-  |  Body:
-  = question.body
-p
-  |  Best_answer_title
-  = question.best_answer&.title
-p
-  |  Reward to best answer:
-p
--if question&.reward.present?
-  = image_tag question.reward.image, size: '90x80'
-p
-  | Author question:
-  = question.user.email
--if question.files.attached?
-  |  File:
-  = render 'shared/attachments', resource: question
-= render 'links/links_collection', resource: question
+div id="question-#{@question.id}"
+  p
+    |  Title:
+    = question.title
+  p
+    |  Body:
+    = question.body
+  p
+    |  Best_answer_title
+    = question.best_answer&.title
+  p
+    |  Reward to best answer:
+  p
+  -if question&.reward.present?
+    = image_tag question.reward.image, size: '90x80'
+  p
+    | Author question:
+    = question.user.email
+  -if question.files.attached?
+    |  File:
+    = render 'shared/attachments', resource: question
 
-- if current_user&.author?(question)
-  p= link_to 'Edit Question', '#', class: 'edit-question-link', data: { question_id: question.id }
-  p= link_to 'Delete Question', question_path(question), method: :delete
+  = render 'shared/vote', resource: question
 
-.question-errors
-  = render 'shared/errors', resource: question
+  = render 'links/links_collection', resource: question
 
-= form_with model: question, class: 'hidden', html: {id: "edit-question-#{question.id}"}, local: false do |f|
-  = f.label :title
-  = f.text_area :title, class: 'form-control'
-  = f.label :body
-  = f.text_area :body, class: 'form-control'
-  = f.label :files
-  = f.file_field :files, class: 'form-control', multiple: true, direct_upload: true
-  = render 'links/link', resource: question, f: f
-  = f.submit 'Save update question', class: 'btn btn-primary'
+  - if current_user&.author?(question)
+    p= link_to 'Edit Question', '#', class: 'edit-question-link', data: { question_id: question.id }
+    p= link_to 'Delete Question', question_path(question), method: :delete
+
+  .question-errors
+    = render 'shared/errors', resource: question
+
+  = form_with model: question, class: 'hidden', html: {id: "edit-question-#{question.id}"}, local: false do |f|
+    = f.label :title
+    = f.text_area :title, class: 'form-control'
+    = f.label :body
+    = f.text_area :body, class: 'form-control'
+    = f.label :files
+    = f.file_field :files, class: 'form-control', multiple: true, direct_upload: true
+    = render 'links/link', resource: question, f: f
+    = f.submit 'Save update question', class: 'btn btn-primary'
