@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Question < ApplicationRecord
+  include Votable
+
   has_many :answers, dependent: :destroy
   has_many :links, dependent: :destroy, as: :linkable
   has_one :reward, dependent: :destroy
@@ -14,10 +16,12 @@ class Question < ApplicationRecord
 
   validates :title, :body, presence: true
 
+  # rubocop:disable Naming/AccessorMethodName
   def set_best_answer(answer)
     transaction do
       update(best_answer: answer)
       reward&.update(user: answer.user)
     end
   end
+  # rubocop:enable Naming/AccessorMethodName
 end
