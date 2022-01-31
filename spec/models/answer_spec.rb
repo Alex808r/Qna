@@ -3,8 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe Answer, type: :model do
-  let(:question) { create(:question_factory) }
+  let!(:question) { create(:question_factory) }
   let(:answer) { build(:answer, question: question) }
+
+  it_behaves_like 'votable_object'
+
   # валидна ли фабрика
   it 'factory should be valid' do
     expect(answer).to be_valid
@@ -22,6 +25,7 @@ RSpec.describe Answer, type: :model do
     it { should belong_to(:question) }
     it { should belong_to(:user) }
     it { should have_many(:links).dependent(:destroy) }
+    it { should have_many(:votes).dependent(:destroy) }
   end
 
   describe 'validations' do

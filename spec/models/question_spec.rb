@@ -7,6 +7,8 @@ RSpec.describe Question, type: :model do
   let!(:question) { create(:question_factory, user: user) }
   let!(:answers) { create_list(:answer, 3, question: question, user: user) }
 
+  it_behaves_like 'votable_object'
+
   it 'factory should be valid' do
     # expect(user.valid?).to eq(true) аналогичная запись
     expect(question).to be_valid
@@ -28,6 +30,7 @@ RSpec.describe Question, type: :model do
     it { should have_many(:links).dependent(:destroy) }
     it { should have_one(:reward).dependent(:destroy) }
     it { should belong_to(:user) }
+    it { should have_many(:votes).dependent(:destroy) }
   end
 
   describe 'validations' do

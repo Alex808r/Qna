@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class AnswersController < ApplicationController
+  include Voted
+
   before_action :authenticate_user!, except: %i[create edit update]
   before_action :set_question, only: %i[create]
   before_action :set_answer, only: %i[edit update destroy best_answer]
@@ -9,6 +11,14 @@ class AnswersController < ApplicationController
     @answer = @question.answers.build(answer_params)
     @answer.user = current_user
     flash.now[:notice] = 'Answer successfully created' if @answer.save
+
+    # respond_to do |format|
+    #   if @answer.save
+    #     format.json { render json: @answer }
+    #   else
+    #     format.json { render json: @answer.errors.full_messages, status: :unprocessable_entity }
+    #   end
+    # end
   end
 
   def edit; end

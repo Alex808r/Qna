@@ -5,7 +5,8 @@ FactoryBot.define do
     "Answer Body N: #{n}"
   end
   factory :answer do
-    association(:question)
+    # association(:question)
+    association :question, factory: :question_factory
     association(:user)
     title { 'MyAnswer' }
     body

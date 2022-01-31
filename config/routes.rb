@@ -7,8 +7,16 @@ Rails.application.routes.draw do
   resources :attachments, only: [:destroy]
   resources :links, only: [:destroy]
 
-  resources :questions do
-    resources :answers, shallow: true do
+  concern :vote do
+    member do
+      put :vote_up
+      put :vote_down
+      delete :vote_cancel
+    end
+  end
+
+  resources :questions, concerns: :vote do
+    resources :answers, concerns: :vote, shallow: true do
       post :best_answer, on: :member
     end
   end
