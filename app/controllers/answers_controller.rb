@@ -6,12 +6,12 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!, except: %i[create edit update]
   before_action :set_question, only: %i[create]
   before_action :set_answer, only: %i[edit update destroy best_answer]
+  after_action :publish_answer, only: [:create]
 
   def create
     @answer = @question.answers.build(answer_params)
     @answer.user = current_user
     flash.now[:notice] = 'Answer successfully created' if @answer.save
-
     # respond_to do |format|
     #   if @answer.save
     #     format.json { render json: @answer }
@@ -62,5 +62,15 @@ class AnswersController < ApplicationController
   def set_answer
     # @answer = @question.answers.find(params[:id])
     @answer = Answer.with_attached_files.find(params[:id])
+  end
+
+  def publish_answer
+    return if @answer.errors.any?
+
+    ActionCable.server.broadcast("answers/#{params[:question_id]}",
+                                 ApplicationController.render(
+                                   partial: 'answers/answer_channel',
+                                   locals: { question: @answer.question, answer: @answer, current_user: current_user }
+                                 ))
   end
 end

@@ -16,6 +16,7 @@ class QuestionsController < ApplicationController
     @answer.links.build
     @best_answer = @question.best_answer
     @other_answers = @question.answers.where.not(id: @question.best_answer)
+    gon.push({ question_id: @question.id })
   end
 
   def new
