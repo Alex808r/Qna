@@ -1,4 +1,7 @@
-div id="question-#{@question.id}"
+div id="question-list-item-#{question.id}"
+  p= link_to question.title, question
+
+      / div id="question-#{question.id}"
   p
     |  Title:
     = question.title
@@ -25,8 +28,8 @@ div id="question-#{@question.id}"
   = render 'links/links_collection', resource: question
 
   - if current_user&.author?(question)
-    p= link_to 'Edit Question', '#', class: 'edit-question-link', data: { question_id: question.id }
-    p= link_to 'Delete Question', question_path(question), method: :delete
+    p= link_to 'Edit Question', '#', class: 'edit-question-link', data: { question_id: question.id }, remote: true
+    p= link_to 'Delete Question', question_path(question), method: :delete, remote: true
 
   .question-errors
     = render 'shared/errors', resource: question
