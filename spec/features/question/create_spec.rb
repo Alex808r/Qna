@@ -67,16 +67,15 @@ feature 'User can create question', %q{
 
   context 'muliple sessions' do
     scenario 'question appears on another users page', js: true do
-      
       Capybara.using_session('user') do
         sign_in(user)
         visit questions_path
       end
-    
+
       Capybara.using_session('guest') do
         visit questions_path
       end
-    
+
       Capybara.using_session('user') do
         click_on 'Ask question'
         fill_in 'Title', with: 'muliple sessions title'
@@ -90,5 +89,4 @@ feature 'User can create question', %q{
       end
     end
   end
-  
 end

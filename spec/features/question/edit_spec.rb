@@ -29,9 +29,9 @@ feature 'User can edit his question', %q{
 
       scenario 'edit his question' do
         # within "#question-list-item-#{question.id}" do # чтобы убедиться, что впорос в списке, а не в форме
-          within '.question' do # чтобы убедиться, что ответ в списке, а не в форме
+        within '.question' do # чтобы убедиться, что ответ в списке, а не в форме
           fill_in 'Title', with: 'edited title'
-          fill_in 'Body',  with: 'edited body'
+          fill_in 'Body', with: 'edited body'
           click_on 'Save update question'
 
           expect(page).to_not have_content question.body
