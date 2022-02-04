@@ -64,4 +64,31 @@ feature 'User can create question', %q{
       expect(page).to have_content 'You need to sign in or sign up before continuing.'
     end
   end
+
+  context 'muliple sessions' do
+    scenario 'question appears on another users page', js: true do
+      
+      Capybara.using_session('user') do
+        sign_in(user)
+        visit questions_path
+      end
+    
+      Capybara.using_session('guest') do
+        visit questions_path
+      end
+    
+      Capybara.using_session('user') do
+        click_on 'Ask question'
+        fill_in 'Title', with: 'muliple sessions title'
+        fill_in 'Body', with: 'muliple sessions body'
+        click_on 'Ask'
+        expect(page).to have_content 'Your question successfully created.'
+        expect(page).to have_content 'muliple sessions title'
+      end
+      Capybara.using_session('guest') do
+        expect(page).to have_content 'muliple sessions title'
+      end
+    end
+  end
+  
 end
