@@ -24,4 +24,6 @@ Rails.application.routes.draw do
   resources :users, only: :show_rewards do
     get :show_rewards, on: :member
   end
+
+  mount ActionCable.server => '/cable'
 end
