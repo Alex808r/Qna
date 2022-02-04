@@ -18,6 +18,8 @@ gem 'cocoon'
 # Gists API NETWORKING
 gem 'octokit', '~> 4.0'
 
+gem 'gon'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.1.4', '>= 6.1.4.1'
 # Use postgresql as the database for Active Record
