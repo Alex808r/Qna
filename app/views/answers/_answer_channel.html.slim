@@ -1,6 +1,12 @@
 div id="answer-#{answer.id}"
   p= answer.title
   p= answer.body
+
+  .answer-comments id="answer-comments-#{answer.id}"
+    h4 Comments:
+    = render answer.comments
+    - if current_user
+      = render 'comments/form_answer', answer: answer
 / - if current_user && !current_user.author?(answer)
 /   .vote
 /     .rating id="rating-#{answer.class.name.underscore}-#{answer.id}"

@@ -10,6 +10,12 @@ div id="answer-#{answer.id}"
 
   = render 'shared/vote', resource: answer
 
+  .answer-comments id="answer-comments-#{answer.id}"
+    h4 Comments:
+    = render answer.comments
+    - if current_user
+      = render 'comments/form_answer', answer: answer
+
   -if current_user&.author?(@question)
     p= link_to 'Best answer', best_answer_answer_path(answer), method: :post, remote: true
 
