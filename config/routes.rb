@@ -15,8 +15,14 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :questions, concerns: :vote do
-    resources :answers, concerns: :vote, shallow: true do
+  concern :commented do
+    member do
+      post :create_comment
+    end
+  end
+
+  resources :questions, concerns: %i[vote commented] do
+    resources :answers, concerns: %i[vote commented], shallow: true do
       post :best_answer, on: :member
     end
   end
