@@ -19,7 +19,7 @@ feature 'User can vote for question', %q{
       end
 
       scenario 'can votes up for question', js: true do
-        within "#question-#{question.id}" do
+        within "#question-list-item-#{question.id}" do
           expect(page).to have_content 'Rating: 0'
           click_on 'Up'
 
@@ -31,7 +31,7 @@ feature 'User can vote for question', %q{
       end
 
       scenario 'can not votes up twice' do
-        within "#question-#{question.id}" do
+        within "#question-list-item-#{question.id}" do
           expect(page).to have_content 'Rating: 0'
           click_on 'Up'
           click_on 'Up'
@@ -44,7 +44,7 @@ feature 'User can vote for question', %q{
       end
 
       scenario 'cancel vote' do
-        within "#question-#{question.id}" do
+        within "#question-list-item-#{question.id}" do
           expect(page).to have_content 'Rating: 0'
           click_on 'Up'
           click_on 'Cancel'
@@ -57,7 +57,7 @@ feature 'User can vote for question', %q{
       end
 
       scenario 'can votes down for question' do
-        within "#question-#{question.id}" do
+        within "#question-list-item-#{question.id}" do
           expect(page).to have_content 'Rating: 0'
           click_on 'Down'
 
@@ -69,7 +69,7 @@ feature 'User can vote for question', %q{
       end
 
       scenario 'can not to vote down twice' do
-        within "#question-#{question.id}" do
+        within "#question-list-item-#{question.id}" do
           expect(page).to have_content 'Rating: 0'
 
           click_on 'Down'
@@ -83,7 +83,7 @@ feature 'User can vote for question', %q{
       end
 
       scenario 'can change vote' do
-        within "#question-#{question.id}" do
+        within "#question-list-item-#{question.id}" do
           click_on 'Up'
           click_on 'Cancel'
           click_on 'Down'
@@ -97,7 +97,7 @@ feature 'User can vote for question', %q{
       end
 
       scenario 'can not change vote with button Down' do
-        within "#question-#{question.id}" do
+        within "#question-list-item-#{question.id}" do
           expect(page).to have_content 'Rating: 0'
           click_on 'Up'
           click_on 'Down'

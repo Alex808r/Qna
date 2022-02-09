@@ -58,4 +58,28 @@ feature 'The user can create an answer to the question ', %q{
       expect(page).to_not have_link 'Create answer'
     end
   end
+
+  context 'muliple sessions' do
+    scenario 'answer appears on another users page', js: true do
+      Capybara.using_session('user') do
+        sign_in(user)
+        visit question_path(question)
+      end
+
+      Capybara.using_session('guest') do
+        visit question_path(question)
+      end
+
+      Capybara.using_session('user') do
+        fill_in 'Title', with: 'muliple sessions title'
+        fill_in 'Body', with: 'muliple sessions body'
+        click_on 'Create Answer'
+        expect(page).to have_content 'muliple sessions title'
+      end
+
+      Capybara.using_session('guest') do
+        expect(page).to have_content 'muliple sessions title'
+      end
+    end
+  end
 end

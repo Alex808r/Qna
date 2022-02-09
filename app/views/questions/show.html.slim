@@ -1,6 +1,15 @@
 .question
   = render @question
 
+.question-comments
+  h4 Comments:
+  = render @question.comments
+  - if current_user
+    = render 'comments/form_question', resource: @question
+/ .question. id="question-#{@question.id}"
+/   h2= @question.title
+/   h3= @question.body
+
 hr
 
 h4 All Answers

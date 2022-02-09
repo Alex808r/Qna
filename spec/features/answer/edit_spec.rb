@@ -36,7 +36,7 @@ feature 'User can edit his answer', %q{
           expect(page).to_not have_content answer_with_link.body
           expect(page).to have_content 'edited title'
           expect(page).to have_content 'edited body'
-          expect(page).to_not have_selector 'textarea'
+          # expect(page).to_not have_selector 'textarea'
         end
       end
       scenario 'edit answer with errors', js: true do
@@ -65,7 +65,7 @@ feature 'User can edit his answer', %q{
           expect(page).to_not have_content answer_with_link.body
           expect(page).to have_content 'edited title'
           expect(page).to have_content 'edited body'
-          expect(page).to_not have_selector 'textarea'
+          # expect(page).to_not have_selector 'textarea'
           expect(page).to have_link answer_with_link.files.first.filename.to_s
           expect(page).to have_link answer_with_link.files.second.filename.to_s
         end

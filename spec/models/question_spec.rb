@@ -31,6 +31,7 @@ RSpec.describe Question, type: :model do
     it { should have_one(:reward).dependent(:destroy) }
     it { should belong_to(:user) }
     it { should have_many(:votes).dependent(:destroy) }
+    it { should have_many(:comments).dependent(:destroy) }
   end
 
   describe 'validations' do

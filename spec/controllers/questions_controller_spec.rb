@@ -198,4 +198,8 @@ RSpec.describe QuestionsController, type: :controller do
       end
     end
   end
+
+  describe 'includes the correct concerns' do
+    it { expect(controller.class.ancestors.include?(Commented)).to eq(true) }
+  end
 end
