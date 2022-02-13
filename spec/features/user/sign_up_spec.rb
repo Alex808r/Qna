@@ -18,9 +18,7 @@ feature 'User can sign up', %q{
     fill_in 'Password confirmation', with: '123456'
     click_button 'Sign up'
 
-    expect(page).to have_content 'Welcome! You have signed up successfully.'
-    expect(page).to have_content 'Logout'
-    expect(page).to have_content 'first@user.com'
+    expect(page).to have_content 'A message with a confirmation link has been sent to your email address.'
   end
 
   describe 'User tries to sign up with invalid attribute' do
