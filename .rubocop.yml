@@ -35,3 +35,6 @@ Style/RedundantPercentQ:
 
 Naming/VariableNumber:
   EnforcedStyle: snake_case
+
+Metrics/MethodLength:
+  Enabled: false

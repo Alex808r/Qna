@@ -20,6 +20,12 @@ gem 'octokit', '~> 4.0'
 
 gem 'gon'
 
+gem 'capybara-email'
+gem 'omniauth'
+gem 'omniauth-github'
+gem 'omniauth-rails_csrf_protection'
+gem 'omniauth-vkontakte'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.1.4', '>= 6.1.4.1'
 # Use postgresql as the database for Active Record
@@ -54,6 +60,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   # Configuration variables
   gem 'dotenv-rails'
+  gem 'letter_opener'
 end
 
 group :development do
