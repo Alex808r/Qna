@@ -26,7 +26,7 @@ gem 'omniauth-github'
 gem 'omniauth-rails_csrf_protection'
 gem 'omniauth-vkontakte'
 
-#Authorization
+# Authorization
 gem 'cancancan'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'

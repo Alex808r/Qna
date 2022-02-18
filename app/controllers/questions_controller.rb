@@ -8,6 +8,8 @@ class QuestionsController < ApplicationController
   before_action :set_question, only: %i[show edit update destroy]
   after_action :publish_question, only: [:create]
 
+  authorize_resource
+
   def index
     @questions = Question.all
   end
@@ -38,14 +40,15 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    return unless current_user&.author?(@question)
+    # return unless current_user&.author?(@question)
+    return unless authorize! :update, @question
 
     @question.update(question_params)
     flash.now[:notice] = 'Your question successfully updated.'
   end
 
   def destroy
-    if current_user.author?(@question)
+    if authorize! :destroy, @question
       @question.delete
       redirect_to questions_path, notice: 'Your question successfully deleted'
     else
