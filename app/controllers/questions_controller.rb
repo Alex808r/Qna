@@ -41,19 +41,13 @@ class QuestionsController < ApplicationController
 
   def update
     # return unless current_user&.author?(@question)
-    return unless authorize! :update, @question
-
     @question.update(question_params)
     flash.now[:notice] = 'Your question successfully updated.'
   end
 
   def destroy
-    if authorize! :destroy, @question
-      @question.delete
-      redirect_to questions_path, notice: 'Your question successfully deleted'
-    else
-      redirect_to @question, notice: 'Cannot be deleted. You are not the author of the question.'
-    end
+    @question.delete
+    redirect_to questions_path, notice: 'Your question successfully deleted'
   end
 
   private

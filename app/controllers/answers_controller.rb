@@ -27,16 +27,12 @@ class AnswersController < ApplicationController
   def edit; end
 
   def update
-    return unless authorize! :update, @answer
-
     @answer.update(answer_params)
     @question = @answer.question
   end
 
   def destroy
     # return unless current_user&.author?(@answer)
-    return unless authorize! :destroy, @answer
-
     @answer.delete
     @question = @answer.question
     flash.now[:notice] = 'Your answer successfully deleted'
@@ -45,8 +41,6 @@ class AnswersController < ApplicationController
   def best_answer
     @question = @answer.question
     # return unless current_user&.author?(@question)
-    return unless authorize! :best_answer, @answer
-
     @question.set_best_answer(@answer)
 
     @best_answer = @question.best_answer

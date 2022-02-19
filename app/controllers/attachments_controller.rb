@@ -2,7 +2,8 @@
 
 class AttachmentsController < ApplicationController
   def destroy
-    attachment.purge if authorize! :destroy, attachment
+    authorize! :destroy, attachment
+    attachment.purge
   end
 
   private
