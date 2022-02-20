@@ -4,7 +4,7 @@
 .question-comments
   h4 Comments:
   = render @question.comments
-  - if current_user
+  - if can?(:create, Comment)
     = render 'comments/form_question', resource: @question
 / .question. id="question-#{@question.id}"
 /   h2= @question.title
@@ -18,7 +18,7 @@ h4 All Answers
     = render 'answers/best_answer', resource: @best_answer
   = render @other_answers
 
-- if user_signed_in?
+- if can?(:create, Answer)
   h4 New Answer
   .answer-errors
     = render 'shared/errors', resource: @answer

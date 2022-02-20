@@ -1,16 +1,17 @@
 / p= link_to 'remove Best answer!', best_answer_answer_path(resource), method: :post, remote: true
 
 - if resource&.persisted?
-    h1 The best answer
-    p= resource.title
-    p= resource.body
-    p= render 'shared/vote', resource: resource
+  h1 The best answer
+  p= resource.title
+  p= resource.body
+  p= render 'shared/vote', resource: resource
 
-
-- if current_user&.author?(resource)
+- if can?(:update, resource)
   p= link_to 'Edit answer', '#', class: 'edit-answer-link', data: { answer_id: resource.id }
+- if can? :destroy, resource
   p= link_to 'Delete answer', answer_path(resource), method: :delete, remote: true
 
+- if can?(:update, resource)
   = form_with model: resource, class: 'hidden', html: { id: "edit-answer-#{resource.id}" }, local: false do |f|
     = f.label :title
     = f.text_area :title, class: 'form-control'

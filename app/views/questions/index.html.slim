@@ -1,5 +1,6 @@
 .questions
-  h4= link_to 'Ask question', new_question_path
+  -if can?(:create, Question)
+    h4= link_to 'Ask question', new_question_path
 
 h1.display-4 All Questions
 = render @questions

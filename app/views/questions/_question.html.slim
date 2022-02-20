@@ -27,19 +27,21 @@ div id="question-list-item-#{question.id}"
 
   = render 'links/links_collection', resource: question
 
-  - if current_user&.author?(question)
+  - if can?(:update, question)
     p= link_to 'Edit Question', '#', class: 'edit-question-link', data: { question_id: question.id }, remote: true
+
+  - if can?(:destroy, question)
     p= link_to 'Delete Question', question_path(question), method: :delete, remote: true
 
   .question-errors
     = render 'shared/errors', resource: question
-
-  = form_with model: question, class: 'hidden', html: {id: "edit-question-#{question.id}"}, local: false do |f|
-    = f.label :title
-    = f.text_area :title, class: 'form-control'
-    = f.label :body
-    = f.text_area :body, class: 'form-control'
-    = f.label :files
-    = f.file_field :files, class: 'form-control', multiple: true, direct_upload: true
-    = render 'links/link', resource: question, f: f
-    = f.submit 'Save update question', class: 'btn btn-primary'
+  - if can? :update, question
+    = form_with model: question, class: 'hidden', html: {id: "edit-question-#{question.id}"}, local: false do |f|
+      = f.label :title
+      = f.text_area :title, class: 'form-control'
+      = f.label :body
+      = f.text_area :body, class: 'form-control'
+      = f.label :files
+      = f.file_field :files, class: 'form-control', multiple: true, direct_upload: true
+      = render 'links/link', resource: question, f: f
+      = f.submit 'Save update question', class: 'btn btn-primary'
