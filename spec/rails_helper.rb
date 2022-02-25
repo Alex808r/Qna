@@ -72,6 +72,7 @@ RSpec.configure do |config|
   config.include FeatureHelpers, type: :feature
   Capybara.javascript_driver = :selenium_chrome_headless
   config.include OmniauthMacros
+  config.include ApiHelpers, type: :request
 
   config.after(:all) do
     FileUtils.rm_rf("#{Rails.root}/tmp/storage")
