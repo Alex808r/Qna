@@ -122,6 +122,10 @@ describe 'Profiles API', type: :request do
       let(:resource) { question }
     end
 
+    it 'assigns the requested question to @question' do
+      expect(assigns(:question)).to eq question
+    end
+
     context 'Answers' do
       it_behaves_like 'Return list of objects' do
         let(:responce_resource) { question_response['answers'] }
@@ -151,7 +155,7 @@ describe 'Profiles API', type: :request do
     end
   end
 
-  describe 'POST /api/v1/questions' do
+  describe 'POST /api/v1/questions(action create)' do
     let(:api_path) { '/api/v1/questions' }
     let(:access_token) { create(:access_token) }
 
@@ -193,6 +197,83 @@ describe 'Profiles API', type: :request do
 
         it 'return errors' do
           expect(response.body).to match(/errors/)
+        end
+      end
+    end
+  end
+
+  describe 'PATCH /api/v1/questions(action update)' do
+    let(:author) { create(:user) }
+    let(:not_author) { create(:user) }
+    let!(:question) { create(:question_factory, user: author) }
+    let(:api_path) { "/api/v1/questions/#{question.id}" }
+
+    it_behaves_like 'API authorizable' do
+      let(:method) { :patch }
+    end
+
+    context 'authorized' do
+      let(:author_access_token) { create(:access_token, resource_owner_id: author.id) }
+
+      context 'with valid attributes' do
+        before do
+          patch api_path, params: { id: question,
+                                    question: { title: 'new title API', body: 'new body API' },
+                                    access_token: author_access_token.token }
+        end
+
+        it_behaves_like 'Status be_successful'
+
+        it 'assigns the requested question to @question' do
+          expect(assigns(:question)).to eq question
+        end
+
+        it 'changes question attributes' do
+          question.reload
+
+          expect(question.title).to eq 'new title API'
+          expect(question.body).to eq 'new body API'
+        end
+      end
+
+      context 'with invalid attributes' do
+        before do
+          patch api_path, params: { id: question,
+                                    question: attributes_for(:question_factory, :invalid),
+                                    access_token: author_access_token.token }
+        end
+        it 'does not change question' do
+          question.reload
+
+          expect(question.body).to eq 'MyText'
+        end
+
+        it 'return status unprocessable entity' do
+          expect(response.status).to eq 422
+        end
+
+        it 'return errors' do
+          expect(response.body).to match(/errors/)
+        end
+      end
+
+      context 'Not Author questions' do
+        let(:not_author_access_token) { create(:access_token, resource_owner_id: not_author.id) }
+
+        before do
+          patch api_path, params: { id: question,
+                                    question: attributes_for(:question_factory),
+                                    access_token: not_author_access_token.token }
+        end
+
+        it 'not changes question attirbutes' do
+          question.reload
+
+          expect(question.body).to eq 'MyText'
+        end
+
+        it 'returns 302 status' do
+          expect(response.status).to eq 302
         end
       end
     end
