@@ -34,7 +34,7 @@ Style/RedundantPercentQ:
   Enabled: false
 
 Naming/VariableNumber:
-  EnforcedStyle: snake_case
+  Enabled: false
 
 Metrics/MethodLength:
   Enabled: false

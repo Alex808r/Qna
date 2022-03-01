@@ -12,7 +12,7 @@ Rails.application.routes.draw do
         get :all_users, on: :collection
       end
 
-      resources :questions, only: %i[index show]
+      resources :questions, only: %i[index show create]
     end
   end
 

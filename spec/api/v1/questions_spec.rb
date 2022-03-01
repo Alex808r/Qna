@@ -3,10 +3,12 @@
 require 'rails_helper'
 
 describe 'Profiles API', type: :request do
-  let(:headers) do
-    { 'CONTENT_TYPE' => 'application/json',
-      'ACCEPT' => 'application/json' }
-  end
+  # let(:headers) do
+  #   { 'CONTENT_TYPE' => 'application/json',
+  #     'ACCEPT' => 'application/json' }
+  # end
+
+  let(:headers) { { 'ACCEPT' => 'application/json' } }
 
   describe 'GET /api/v1/questions(action index)' do
     let(:api_path) { '/api/v1/questions' }
@@ -145,6 +147,53 @@ describe 'Profiles API', type: :request do
       it_behaves_like 'Return list of objects' do
         let(:responce_resource) { question_response['files'] }
         let(:resource) { question.files.size }
+      end
+    end
+  end
+
+  describe 'POST /api/v1/questions' do
+    let(:api_path) { '/api/v1/questions' }
+    let(:access_token) { create(:access_token) }
+
+    it_behaves_like 'API authorizable' do
+      let(:method) { :post }
+    end
+
+    context 'authorized' do
+      context 'with valid attributes' do
+        it 'create a new question' do
+          expect do
+            post api_path, params: { question: attributes_for(:question_factory),
+                                     access_token: access_token.token }
+          end.to change(Question, :count).by(1)
+        end
+
+        it 'return status successful' do
+          post api_path, params: { question: attributes_for(:question_factory), access_token: access_token.token }
+          expect(response).to be_successful
+        end
+      end
+
+      context 'with invalid attributes' do
+        it 'does not create question' do
+          expect do
+            post api_path, params: { question: attributes_for(:question_factory, :invalid),
+                                     access_token: access_token.token }
+          end.to_not change(Question, :count)
+        end
+
+        before do
+          post api_path, params: { question: attributes_for(:question_factory, :invalid),
+                                   access_token: access_token.token }
+        end
+
+        it 'return status unprocessable entity' do
+          expect(response.status).to eq 422
+        end
+
+        it 'return errors' do
+          expect(response.body).to match(/errors/)
+        end
       end
     end
   end
