@@ -278,4 +278,55 @@ describe 'Profiles API', type: :request do
       end
     end
   end
+
+  describe 'DELETE /api/v1/questions' do
+    let(:author) { create(:user) }
+    let!(:question) { create(:question_factory, user: author) }
+    let(:api_path) { "/api/v1/questions/#{question.id}" }
+
+    it_behaves_like 'API authorizable' do
+      let(:method) { :delete }
+    end
+
+    context 'authorized' do
+      let(:author_access_token) { create(:access_token, resource_owner_id: author.id) }
+      # subject { delete api_path, params: { id: question, access_token: author_access_token.token} }
+
+      before do
+        delete api_path, params: { id: question, access_token: author_access_token.token }
+      end
+
+      it_behaves_like 'Status be_successful'
+
+      it 'delete the question' do
+        expect(Question.count).to eq 0
+        # expect { subject }.to change(Question, :count).by(-1)
+      end
+
+      it 'returns successful message' do
+        expect(json['messages']).to include('Your question successfully deleted')
+      end
+    end
+
+    context 'not authorized' do
+      let(:not_author) { create(:user) }
+      let(:not_author_access_token) { create(:access_token, resource_owner_id: not_author.id) }
+      let(:params) { { id: question, access_token: not_author_access_token.token } }
+      subject { delete api_path, params: params, headers: headers }
+
+      # before do
+      #   delete api_path, params: params, headers: headers
+      # end
+
+      it 'cannot delete the question' do
+        expect { subject }.to_not change(Question, :count)
+        # expect(Question.count).to eq 1
+      end
+
+      it 'returns status 403' do
+        subject
+        expect(response.status).to eq 403
+      end
+    end
+  end
 end

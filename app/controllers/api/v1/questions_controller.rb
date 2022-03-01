@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Api::V1::QuestionsController < Api::V1::BaseController
-  before_action :set_question, only: %i[show update]
+  before_action :set_question, only: %i[show update destroy]
 
   def index
     @questions = Question.all
@@ -30,6 +30,13 @@ class Api::V1::QuestionsController < Api::V1::BaseController
     else
       render json: { errors: @question.errors }, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    authorize! :destroy, @question
+
+    @question.destroy
+    render json: { messages: ['Your question successfully deleted'] }
   end
 
   private
