@@ -8,7 +8,7 @@ describe 'Profiles API', type: :request do
       'ACCEPT' => 'application/json' }
   end
 
-  describe 'GET /api/v1/questions' do
+  describe 'GET /api/v1/questions(action index)' do
     let(:api_path) { '/api/v1/questions' }
     let(:method) { :get }
 
@@ -93,6 +93,58 @@ describe 'Profiles API', type: :request do
           let(:response_resource) { answer_response }
           let(:resource) { answer }
         end
+      end
+    end
+  end
+
+  describe 'GET /api/v1/questions/:id(action show)' do
+    let(:user) { create(:user) }
+    let(:question) { create(:question_factory, :with_file, user: user) }
+    let!(:answers) { create_list(:answer, 3, question: question) }
+    let!(:links) { create_list(:link, 3, linkable: question) }
+    let!(:comments) { create_list(:comment, 3, commentable: question, user: user) }
+    let(:question_response) { json['question'] }
+    let(:api_path) { "/api/v1/questions/#{question.id}" }
+    let(:method) { :get }
+    let(:access_token) { create(:access_token) }
+
+    it_behaves_like 'API authorizable'
+
+    before { do_request(method, api_path, params: { access_token: access_token.token }, headers: headers) }
+
+    it_behaves_like 'Status be_successful'
+
+    it_behaves_like 'Return public fields' do
+      let(:attributes) { %w[id title body created_at updated_at] }
+      let(:response_resource) { question_response }
+      let(:resource) { question }
+    end
+
+    context 'Answers' do
+      it_behaves_like 'Return list of objects' do
+        let(:responce_resource) { question_response['answers'] }
+        let(:resource) { question.answers.size }
+      end
+    end
+
+    context 'Comments' do
+      it_behaves_like 'Return list of objects' do
+        let(:responce_resource) { question_response['comments'] }
+        let(:resource) { question.comments.size }
+      end
+    end
+
+    context 'Links' do
+      it_behaves_like 'Return list of objects' do
+        let(:responce_resource) { question_response['links'] }
+        let(:resource) { question.links.size }
+      end
+    end
+
+    context 'Files' do
+      it_behaves_like 'Return list of objects' do
+        let(:responce_resource) { question_response['files'] }
+        let(:resource) { question.files.size }
       end
     end
   end
