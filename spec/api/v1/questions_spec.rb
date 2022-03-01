@@ -34,9 +34,11 @@ describe 'Profiles API', type: :request do
       let!(:answers) { create_list(:answer, 3, question: question) }
       before { get '/api/v1/questions', params: { access_token: access_token.token }, headers: headers }
 
-      it 'returns 200 status' do
-        expect(response).to be_successful
-      end
+      it_behaves_like 'Status be_successful'
+
+      # it 'returns 200 status' do
+      #   expect(response).to be_successful
+      # end
 
       it 'returns list of question' do
         expect(json['questions'].size).to eq 2

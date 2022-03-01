@@ -10,10 +10,9 @@ describe 'Profiles API', type: :request do
 
   describe 'GET /api/v1/profiles/me' do
     let(:api_path) { '/api/v1/profiles/me' }
+    let(:method) { :get }
 
-    it_behaves_like 'API authorizable' do
-      let(:method) { :get }
-    end
+    it_behaves_like 'API authorizable'
 
     # context 'unauthorized' do
     #   it 'returns 401 status if there is no access_token' do
@@ -32,11 +31,13 @@ describe 'Profiles API', type: :request do
       let(:access_token) { create(:access_token, resource_owner_id: me.id) }
 
       # before { get '/api/v1/profiles/me', params: { access_token: access_token.token }, headers: headers }
-      before { get api_path, params: { access_token: access_token.token }, headers: headers }
+      before { do_request(method, api_path, params: { access_token: access_token.token }, headers: headers) }
 
-      it 'returns 200 status' do
-        expect(response).to be_successful
-      end
+      it_behaves_like 'Status be_successful'
+
+      # it 'returns 200 status' do
+      #   expect(response).to be_successful
+      # end
 
       it 'returns all public fields' do
         %w[id email admin created_at updated_at].each do |attr|
