@@ -40,14 +40,25 @@ describe 'Profiles API', type: :request do
       #   expect(response).to be_successful
       # end
 
-      it 'returns list of question' do
-        expect(json['questions'].size).to eq 2
+      # it 'returns list of question' do
+      #   expect(json['questions'].size).to eq 2
+      # end
+
+      # it 'returnes all public fields' do
+      #   %w[id title body created_at updated_at].each do |attr|
+      #     expect(question_response[attr]).to eq question.send(attr).as_json
+      #   end
+      # end
+
+      it_behaves_like 'Return list of objects' do
+        let(:responce_resource) { json['questions'] }
+        let(:resource) { questions.size }
       end
 
-      it 'returnes all public fields' do
-        %w[id title body created_at updated_at].each do |attr|
-          expect(question_response[attr]).to eq question.send(attr).as_json
-        end
+      it_behaves_like 'Return public fields' do
+        let(:attributes) { %w[id title body created_at updated_at] }
+        let(:response_resource) { question_response }
+        let(:resource) { question }
       end
 
       it 'contrains user object' do
@@ -62,14 +73,25 @@ describe 'Profiles API', type: :request do
         let(:answer) { answers.first }
         let(:answer_response) { question_response['answers'].first }
 
-        it 'returns list of answer' do
-          expect(question_response['answers'].size).to eq 3
+        # it 'returns list of answer' do
+        #   expect(question_response['answers'].size).to eq 3
+        # end
+        #
+        # it 'returnes all public fields' do
+        #   %w[id title user_id created_at updated_at].each do |attr|
+        #     expect(answer_response[attr]).to eq answer.send(attr).as_json
+        #   end
+        # end
+
+        it_behaves_like 'Return list of objects' do
+          let(:responce_resource) { question_response['answers'] }
+          let(:resource) { question.answers.size }
         end
 
-        it 'returnes all public fields' do
-          %w[id title user_id created_at updated_at].each do |attr|
-            expect(answer_response[attr]).to eq answer.send(attr).as_json
-          end
+        it_behaves_like 'Return public fields' do
+          let(:attributes) { %w[id body user_id created_at updated_at] }
+          let(:response_resource) { answer_response }
+          let(:resource) { answer }
         end
       end
     end

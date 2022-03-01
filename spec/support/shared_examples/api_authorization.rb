@@ -19,3 +19,25 @@ shared_examples_for 'Status be_successful' do
     expect(response).to be_successful
   end
 end
+
+shared_examples_for 'Return public fields' do
+  it 'returns all public fields' do
+    attributes.each do |attr|
+      expect(response_resource[attr]).to eq resource.send(attr).as_json
+    end
+  end
+end
+
+shared_examples_for 'Return private fields' do
+  it 'dose not return private fields' do
+    %w[password encrypted_password].each do |attr|
+      expect(json).to_not have_key(attr)
+    end
+  end
+end
+
+shared_examples_for 'Return list of objects' do
+  it 'returns list of items' do
+    expect(responce_resource.size).to eq resource
+  end
+end

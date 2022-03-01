@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable all
 module Commented
   extend ActiveSupport::Concern
 
@@ -41,3 +42,5 @@ module Commented
     #                                    locals: { comment: @comment }) }))
   end
 end
+
+# rubocop:enable all
