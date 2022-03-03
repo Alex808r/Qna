@@ -11,7 +11,7 @@ class QuestionWithAssociationSerializer < ActiveModel::Serializer
   has_many :files
 
   def answers
-    object.comments.map(&:body)
+    object.answers.map(&:body)
   end
 
   def comments

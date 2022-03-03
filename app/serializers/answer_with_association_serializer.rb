@@ -9,10 +9,6 @@ class AnswerWithAssociationSerializer < ActiveModel::Serializer
   has_many :links
   has_many :files
 
-  def answers
-    object.comments.map(&:body)
-  end
-
   def comments
     object.comments.map(&:body)
   end
