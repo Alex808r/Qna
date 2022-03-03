@@ -12,6 +12,7 @@ RSpec.describe Ability, type: :model do
     it { should be_able_to :read, Comment }
 
     it { should_not be_able_to :menage, :all }
+    it { should be_able_to :all, User, user: user }
   end
 
   describe 'for admin' do
@@ -63,6 +64,7 @@ RSpec.describe Ability, type: :model do
 
       it { should be_able_to :destroy, create(:link, linkable: answer) }
       it { should_not be_able_to :destroy, create(:link, linkable: other_answer) }
+      it { should be_able_to :all, User, user: user }
     end
 
     context 'vote only other objects' do
