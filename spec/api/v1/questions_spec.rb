@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe 'Profiles API', type: :request do
+describe 'Questions API', type: :request do
   # let(:headers) do
   #   { 'CONTENT_TYPE' => 'application/json',
   #     'ACCEPT' => 'application/json' }

@@ -12,7 +12,9 @@ Rails.application.routes.draw do
         get :all_users, on: :collection
       end
 
-      resources :questions, only: %i[index show create update destroy]
+      resources :questions, only: %i[index show create update destroy] do
+        resources :answers, only: %i[index show ], shallow: true
+      end
     end
   end
 
