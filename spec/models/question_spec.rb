@@ -8,6 +8,8 @@ RSpec.describe Question, type: :model do
   let!(:answers) { create_list(:answer, 3, question: question, user: user) }
 
   it_behaves_like 'votable_object'
+  it_behaves_like 'commentable_object'
+  it_behaves_like 'linkable_object'
 
   it 'factory should be valid' do
     # expect(user.valid?).to eq(true) аналогичная запись
@@ -15,7 +17,7 @@ RSpec.describe Question, type: :model do
   end
 
   describe 'have nested file' do
-    it { should accept_nested_attributes_for :links }
+    # it { should accept_nested_attributes_for :links }
     it { should accept_nested_attributes_for :reward }
   end
 
@@ -30,8 +32,8 @@ RSpec.describe Question, type: :model do
     it { should have_many(:links).dependent(:destroy) }
     it { should have_one(:reward).dependent(:destroy) }
     it { should belong_to(:user) }
-    it { should have_many(:votes).dependent(:destroy) }
-    it { should have_many(:comments).dependent(:destroy) }
+    # it { should have_many(:votes).dependent(:destroy) }
+    # it { should have_many(:comments).dependent(:destroy) }
   end
 
   describe 'validations' do

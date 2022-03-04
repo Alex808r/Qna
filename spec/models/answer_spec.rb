@@ -7,6 +7,8 @@ RSpec.describe Answer, type: :model do
   let(:answer) { build(:answer, question: question) }
 
   it_behaves_like 'votable_object'
+  it_behaves_like 'commentable_object'
+  it_behaves_like 'linkable_object'
 
   # валидна ли фабрика
   it 'factory should be valid' do
@@ -26,7 +28,7 @@ RSpec.describe Answer, type: :model do
     it { should belong_to(:user) }
     it { should have_many(:links).dependent(:destroy) }
     it { should have_many(:votes).dependent(:destroy) }
-    it { should have_many(:comments).dependent(:destroy) }
+    # it { should have_many(:comments).dependent(:destroy) }
   end
 
   describe 'validations' do

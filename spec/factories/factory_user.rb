@@ -10,4 +10,8 @@ FactoryBot.define do
     password_confirmation { '12345678' }
     confirmed_at { Time.zone.now }
   end
+
+  trait :admin do
+    admin { true }
+  end
 end

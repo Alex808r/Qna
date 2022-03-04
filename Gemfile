@@ -28,6 +28,13 @@ gem 'omniauth-vkontakte'
 
 # Authorization
 gem 'cancancan'
+# OAuth provider
+gem 'doorkeeper'
+
+# Serializers
+gem 'active_model_serializers', '~> 0.10'
+# A fast JSON parser and Object marshaller as a Ruby gem.
+gem 'oj'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.1.4', '>= 6.1.4.1'
