@@ -328,5 +328,21 @@ describe 'Questions API', type: :request do
         expect(response.status).to eq 403
       end
     end
+
+    context 'admin can delete' do
+      let(:admin) { create(:user, :admin) }
+      let(:admin_access_token) { create(:access_token, resource_owner_id: admin.id) }
+      let(:params) { { id: question, access_token: admin_access_token.token } }
+      subject { delete api_path, params: params, headers: headers }
+
+      it 'delete the question' do
+        expect { subject }.to change(Question, :count).by(-1)
+      end
+
+      it 'returns successful message' do
+        subject
+        expect(json['messages']).to include('Your question successfully deleted')
+      end
+    end
   end
 end
