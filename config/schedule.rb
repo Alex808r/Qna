@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Use this file to easily define all of your cron jobs.
 #
 # It's helpful, but not entirely necessary to understand cron before proceeding.
@@ -17,9 +19,8 @@
 #   runner "AnotherModel.prune_old_records"
 # end
 
-
 every 1.day do
-  runner "DailyDigestJob.perform_now"
+  runner 'DailyDigestJob.perform_now'
 end
 
 # Learn more: http://github.com/javan/whenever

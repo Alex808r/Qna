@@ -1,2 +1,7 @@
-h1 DailyDigest#digest
-p = "#{@greeting}, find me in app/views/daily_digest_mailer/digest.html.slim"
+/ h1 DailyDigest#digest
+/ p = "#{@greeting}, find me in app/views/daily_digest_mailer/digest.html.slim"
+
+h1 = @greeting
+h1 it is a DailyDigest
+- @questions.each do |question|
+  h4= link_to question.title, question.title
