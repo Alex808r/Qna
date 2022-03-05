@@ -25,4 +25,12 @@ class Question < ApplicationRecord
     end
   end
   # rubocop:enable Naming/AccessorMethodName
+
+  private
+
+  after_create :calculate_reputation
+
+  def calculate_reputation
+    ReputationJob.perform_later(self)
+  end
 end

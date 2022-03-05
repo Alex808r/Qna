@@ -57,4 +57,13 @@ RSpec.describe Question, type: :model do
     it { should have_db_column(:best_answer_id).of_type(:integer) }
     it { should have_db_column(:user_id).with_options(null: false) }
   end
+
+  describe 'reputation' do
+    let(:question_reputation) { build(:question_factory) }
+
+    it 'calls Services::Reputation#calculate' do
+      expect(ReputationJob).to receive(:perform_later).with(question_reputation)
+      question_reputation.save!
+    end
+  end
 end
