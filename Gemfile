@@ -35,6 +35,8 @@ gem 'doorkeeper'
 gem 'active_model_serializers', '~> 0.10'
 # A fast JSON parser and Object marshaller as a Ruby gem.
 gem 'oj'
+# Simple, efficient background processing for Ruby(for ActiveJob)
+gem 'sidekiq'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.1.4', '>= 6.1.4.1'
