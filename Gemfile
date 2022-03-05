@@ -37,6 +37,8 @@ gem 'active_model_serializers', '~> 0.10'
 gem 'oj'
 # Simple, efficient background processing for Ruby(for ActiveJob)
 gem 'sidekiq'
+# For web interface sidekiq
+gem 'sinatra', require: false
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.1.4', '>= 6.1.4.1'
