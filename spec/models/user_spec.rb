@@ -13,6 +13,7 @@ RSpec.describe User, type: :model do
     it { should have_many(:questions).dependent(:destroy) }
     it { should have_many(:rewards).dependent(:destroy) }
     it { should have_many(:authorizations).dependent(:destroy) }
+    it { should have_many(:subscriptions).dependent(:destroy) }
   end
 
   describe 'method author' do
