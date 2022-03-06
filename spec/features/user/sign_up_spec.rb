@@ -12,6 +12,31 @@ feature 'User can sign up', %q{
     click_link 'Sign up'
   end
 
+  scenario 'confirmation email' do
+    fill_in 'Email', with: 'first@user.com'
+    fill_in 'Password', with: '123456'
+    fill_in 'Password confirmation', with: '123456'
+    click_button 'Sign up'
+    open_email('first@user.com')
+    current_email.click_link 'Confirm my account'
+    expect(page).to have_content 'Your email address has been successfully confirmed.'
+  end
+
+  scenario 'User tries to sign in without confirmation email' do
+    fill_in 'Email', with: 'first@user.com'
+    fill_in 'Password', with: '123456'
+    fill_in 'Password confirmation', with: '123456'
+    click_button 'Sign up'
+    expect(page).to have_content /confirmation link/
+
+    visit new_user_session_path
+    fill_in 'Email', with: 'first@user.com'
+    fill_in 'Password', with: '123456'
+    click_button 'Log in'
+
+    expect(page).to have_content 'You have to confirm your email address before continuing'
+  end
+
   scenario 'User tries to sign up with valid attribute' do
     fill_in 'Email', with: 'first@user.com'
     fill_in 'Password', with: '123456'
