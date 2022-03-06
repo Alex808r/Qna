@@ -5,6 +5,7 @@ require 'sidekiq/web'
 Rails.application.routes.draw do
   use_doorkeeper
   devise_for :users, controllers: { omniauth_callbacks: 'oauth_callbacks' }
+
   root to: 'questions#index'
 
   authenticate :user, ->(u) { u.admin? } do
@@ -47,7 +48,8 @@ Rails.application.routes.draw do
   end
 
   resources :questions, concerns: %i[vote commented] do
-    resources :answers, concerns: %i[vote commented], shallow: true do
+    resources :subscriptions, only: %i[create destroy], shallow: true
+    resources :answers, only: %i[create edit update destroy], concerns: %i[vote commented], shallow: true do
       post :best_answer, on: :member
     end
   end

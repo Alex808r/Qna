@@ -14,4 +14,10 @@ class Answer < ApplicationRecord
   has_many_attached :files
 
   validates :title, :body, :question_id, presence: true
+
+  after_commit :send_notification, on: :create
+
+  def send_notification
+    NotifyAboutNewAnswerJob.perform_later(self)
+  end
 end

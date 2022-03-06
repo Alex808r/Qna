@@ -18,6 +18,12 @@ class Question < ApplicationRecord
 
   validates :title, :body, presence: true
 
+  after_create :create_subscription
+
+  def create_subscription
+    subscriptions.create(user: user)
+  end
+
   # rubocop:disable Naming/AccessorMethodName
   def set_best_answer(answer)
     transaction do

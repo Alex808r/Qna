@@ -41,4 +41,19 @@ RSpec.describe User, type: :model do
       User.find_for_oauth(auth)
     end
   end
+
+  describe 'method subscribed?' do
+    let(:it_is_author) { create(:user) }
+    let(:not_author) { create(:user) }
+    let(:question) { create(:question_factory, user: it_is_author) }
+    let!(:subscription) { create(:subscription, question: question, user: it_is_author) }
+
+    it 'author question have subscribed' do
+      expect(it_is_author).to be_subscribed(question)
+    end
+
+    it 'did not subscribe if not author' do
+      expect(not_author).to_not be_subscribed(question)
+    end
+  end
 end

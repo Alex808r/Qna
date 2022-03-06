@@ -67,4 +67,18 @@ RSpec.describe Question, type: :model do
       question_reputation.save!
     end
   end
+
+  describe 'subscription' do
+    let(:author) { create(:user) }
+    let(:other_user) { create(:user) }
+    let(:question) { create(:question_factory, user: author) }
+
+    it 'create only author question' do
+      expect(question.subscriptions.first.user).to eq author
+    end
+
+    it 'dont create to other users' do
+      expect(question.subscriptions.first.user).to_not eq other_user
+    end
+  end
 end
