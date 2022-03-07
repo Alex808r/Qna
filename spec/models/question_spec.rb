@@ -30,6 +30,7 @@ RSpec.describe Question, type: :model do
     it { should have_many(:answers) }
     it { should have_many(:answers).dependent(:destroy) }
     it { should have_many(:links).dependent(:destroy) }
+    it { should have_many(:subscriptions).dependent(:destroy) }
     it { should have_one(:reward).dependent(:destroy) }
     it { should belong_to(:user) }
     # it { should have_many(:votes).dependent(:destroy) }
@@ -56,5 +57,28 @@ RSpec.describe Question, type: :model do
     it { should have_db_column(:best_answer_id).with_options(null: true) }
     it { should have_db_column(:best_answer_id).of_type(:integer) }
     it { should have_db_column(:user_id).with_options(null: false) }
+  end
+
+  describe 'reputation' do
+    let(:question_reputation) { build(:question_factory) }
+
+    it 'calls Services::Reputation#calculate' do
+      expect(ReputationJob).to receive(:perform_later).with(question_reputation)
+      question_reputation.save!
+    end
+  end
+
+  describe 'subscription' do
+    let(:author) { create(:user) }
+    let(:other_user) { create(:user) }
+    let(:question) { create(:question_factory, user: author) }
+
+    it 'create only author question' do
+      expect(question.subscriptions.first.user).to eq author
+    end
+
+    it 'dont create to other users' do
+      expect(question.subscriptions.first.user).to_not eq other_user
+    end
   end
 end

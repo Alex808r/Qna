@@ -43,3 +43,6 @@ yarn-debug.log*
 
 # Ignore variables
 .env
+
+# redis db
+dump.rdb

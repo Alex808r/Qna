@@ -13,6 +13,7 @@ RSpec.describe User, type: :model do
     it { should have_many(:questions).dependent(:destroy) }
     it { should have_many(:rewards).dependent(:destroy) }
     it { should have_many(:authorizations).dependent(:destroy) }
+    it { should have_many(:subscriptions).dependent(:destroy) }
   end
 
   describe 'method author' do
@@ -38,6 +39,21 @@ RSpec.describe User, type: :model do
       expect(FindForOauthService).to receive(:new).with(auth).and_return(service)
       expect(service).to receive(:call)
       User.find_for_oauth(auth)
+    end
+  end
+
+  describe 'method subscribed?' do
+    let(:it_is_author) { create(:user) }
+    let(:not_author) { create(:user) }
+    let(:question) { create(:question_factory, user: it_is_author) }
+    let!(:subscription) { create(:subscription, question: question, user: it_is_author) }
+
+    it 'author question have subscribed' do
+      expect(it_is_author).to be_subscribed(question)
+    end
+
+    it 'did not subscribe if not author' do
+      expect(not_author).to_not be_subscribed(question)
     end
   end
 end

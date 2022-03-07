@@ -33,8 +33,17 @@ gem 'doorkeeper'
 
 # Serializers
 gem 'active_model_serializers', '~> 0.10'
+
 # A fast JSON parser and Object marshaller as a Ruby gem.
 gem 'oj'
+
+# Simple, efficient background processing for Ruby(for ActiveJob)
+gem 'sidekiq'
+
+# For web interface sidekiq
+gem 'sinatra', require: false
+# Task on time .Whenever is a Ruby gem that provides a clear syntax for writing and deploying cron jobs.
+gem 'whenever', require: false
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.1.4', '>= 6.1.4.1'

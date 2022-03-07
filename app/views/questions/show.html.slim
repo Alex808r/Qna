@@ -1,6 +1,10 @@
 .question
   = render @question
 
+.subscription
+  = render 'subscriptions/subscription', resource: @question
+
+br
 .question-comments
   h4 Comments:
   = render @question.comments

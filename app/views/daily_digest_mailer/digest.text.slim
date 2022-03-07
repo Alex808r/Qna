@@ -1,0 +1,8 @@
+/ ' DailyDigest#digest
+/ = "\r\n" * 2
+/ ' #{@greeting}, find me in app/views/daily_digest_mailer/digest.text.slim
+
+'#{@greeting} it is a DailyDigest
+
+- @questions.each do |question|
+  = question.title
