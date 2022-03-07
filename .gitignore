@@ -46,3 +46,7 @@ yarn-debug.log*
 
 # redis db
 dump.rdb
+
+# sphinx index and conf
+/config/*.sphinx.conf
+/db/sphinx
