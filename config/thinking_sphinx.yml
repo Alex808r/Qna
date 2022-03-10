@@ -1,0 +1,3 @@
+test:
+  mysql41: 9307
+#  mysql2: 9307 # need to spec/controllers/sphinx_search_controller_spec.rb

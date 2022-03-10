@@ -1,0 +1,18 @@
+- if @result.empty?
+  h3 No results
+- else
+  ul
+  - @result.each do |item|
+    - if item.is_a?(Answer)
+      p = link_to item.question.title, question_path(item.question)
+      p = "#{item.class}: #{ item.body}"
+
+    - elsif item.is_a?(Comment)
+      p = link_to item.commentable.body, question_path(item.commentable)
+      p ="#{item.class}: #{item.body}"
+
+    - elsif item.is_a?(User)
+      = "#{item.email}"
+
+    - else
+      p = link_to item.title, question_path(item)

@@ -45,6 +45,10 @@ gem 'sinatra', require: false
 # Task on time .Whenever is a Ruby gem that provides a clear syntax for writing and deploying cron jobs.
 gem 'whenever', require: false
 
+# Sphinx search
+gem 'mysql2'
+gem 'thinking-sphinx'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.1.4', '>= 6.1.4.1'
 # Use postgresql as the database for Active Record
@@ -78,6 +82,7 @@ group :development, :test do
   # Create factories to tests
   gem 'factory_bot_rails'
   # Configuration variables
+  gem 'database_cleaner'
   gem 'dotenv-rails'
   gem 'letter_opener'
 end

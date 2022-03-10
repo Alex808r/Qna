@@ -12,6 +12,8 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
   end
 
+  get 'search', action: :search, controller: 'sphinx_search'
+
   namespace :api do
     namespace :v1 do
       resources :profiles, only: [:index] do
