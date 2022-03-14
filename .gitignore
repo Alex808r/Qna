@@ -50,3 +50,4 @@ dump.rdb
 # sphinx index and conf
 /config/*.sphinx.conf
 /db/sphinx
+/config/credentials/production.key
