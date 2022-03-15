@@ -78,6 +78,9 @@ gem 'bootsnap', '>= 1.4.4', require: false
 
 gem 'mini_racer', platforms: :ruby
 
+# Configuration variables
+gem 'dotenv-rails'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
@@ -87,7 +90,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   # Configuration variables
   gem 'database_cleaner'
-  gem 'dotenv-rails'
+  # gem 'dotenv-rails'
   gem 'letter_opener'
 end
 
