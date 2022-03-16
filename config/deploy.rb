@@ -18,7 +18,7 @@ append :linked_files, "config/database.yml", "config/master.key", "config/creden
 append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "tmp/webpacker", "public/system", "vendor", "storage"
 
 set :pty, false
-
+after 'deploy:publishing', 'unicorn:restart'
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 
