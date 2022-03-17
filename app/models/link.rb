@@ -2,7 +2,7 @@
 
 class Link < ApplicationRecord
   # belongs_to :question
-  belongs_to :linkable, polymorphic: true
+  belongs_to :linkable, polymorphic: true, touch: true
 
   validates :name, :url, presence: true
 

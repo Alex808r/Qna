@@ -3,11 +3,12 @@
   p Links:
   ul
     - resource.links.each do |link|
-      div id="link_#{link.id}"
-        li= link_to link.name.to_s, link.url, target: '_blank'
-        - if link.gist?
-          - link.open_gist.each do |_file_name, text|
-            p=text.content
+      - cache link do
+        div id="link_#{link.id}"
+          li= link_to link.name.to_s, link.url, target: '_blank'
+          - if link.gist?
+            - link.open_gist.each do |_file_name, text|
+              p=text.content
 
-        - if can?(:destroy, link)
-          = link_to 'Delete link', link_path(link),method: :delete, class: 'btn btn-danger btn-sm', remote: true
+          - if can?(:destroy, link)
+            = link_to 'Delete link', link_path(link),method: :delete, class: 'btn btn-danger btn-sm', remote: true

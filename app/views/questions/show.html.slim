@@ -1,44 +1,48 @@
-.question
-  = render @question
+/ .question
+/   = render @question
 
 .subscription
   = render 'subscriptions/subscription', resource: @question
 
 br
-.question-comments
-  h4 Comments:
-  = render @question.comments
-  - if can?(:create, Comment)
-    = render 'comments/form_question', resource: @question
-/ .question. id="question-#{@question.id}"
-/   h2= @question.title
-/   h3= @question.body
+- cache @question do
+  .question
+    = render @question
 
-hr
+  .question-comments
+    h4 Comments:
+    = render @question.comments
+    - if can?(:create, Comment)
+      = render 'comments/form_question', resource: @question
+  / .question. id="question-#{@question.id}"
+  /   h2= @question.title
+  /   h3= @question.body
 
-h4 All Answers
-.answers
-  - if @question.best_answer
-    = render 'answers/best_answer', resource: @best_answer
-  = render @other_answers
+  hr
 
-- if can?(:create, Answer)
-  h4 New Answer
-  .answer-errors
-    = render 'shared/errors', resource: @answer
-  = form_with model: [@question, @answer], local: false, class: 'new-answer', data: {type: :json} do |f|
-    p
-    = f.label :title
-    = f.text_field :title, class: 'form-control'
-    p
-    = f.label :body
-    = f.text_area :body, class: 'form-control'
-    p
-    = f.label :files
-    = f.file_field :files, class: 'form-control', multiple: true, direct_upload: true
-    .answer-links
-      = render 'links/link', resource: @answer, f: f
-    br
-    = f.submit 'Create Answer'
+  h4 All Answers
+  .answers
+    - if @question.best_answer
+      = render 'answers/best_answer', resource: @best_answer
+    = render @other_answers
+
+  - if can?(:create, Answer)
+    h4 New Answer
+    .answer-errors
+      = render 'shared/errors', resource: @answer
+    = form_with model: [@question, @answer], local: false, class: 'new-answer', data: {type: :json} do |f|
+      p
+      = f.label :title
+      = f.text_field :title, class: 'form-control'
+      p
+      = f.label :body
+      = f.text_area :body, class: 'form-control'
+      p
+      = f.label :files
+      = f.file_field :files, class: 'form-control', multiple: true, direct_upload: true
+      .answer-links
+        = render 'links/link', resource: @answer, f: f
+      br
+      = f.submit 'Create Answer'
 p
   = link_to 'Back', root_path

@@ -1,40 +1,41 @@
-div id="answer-#{answer.id}"
-  = render 'shared/flash_message'
-  p= answer.title
-  p= answer.body
-  = render 'links/links_collection', resource: answer
+- cache answer do
+  div id="answer-#{answer.id}"
+    = render 'shared/flash_message'
+    p= answer.title
+    p= answer.body
+    = render 'links/links_collection', resource: answer
 
-  -if answer.files.attached?
-    |  File:
-    = render 'shared/attachments', resource: answer
+    -if answer.files.attached?
+      |  File:
+      = render 'shared/attachments', resource: answer
 
-  = render 'shared/vote', resource: answer
+    = render 'shared/vote', resource: answer
 
-  .answer-comments id="answer-comments-#{answer.id}"
-    h4 Comments:
-    = render answer.comments
-    - if current_user
-      = render 'comments/form_answer', answer: answer
+    .answer-comments id="answer-comments-#{answer.id}"
+      h4 Comments:
+      = render answer.comments
+      - if current_user
+        = render 'comments/form_answer', answer: answer
 
-  - if can?(:best_answer, answer)
-    p= link_to 'Best answer', best_answer_answer_path(answer), method: :post, remote: true
+    - if can?(:best_answer, answer)
+      p= link_to 'Best answer', best_answer_answer_path(answer), method: :post, remote: true
 
-  - if can?(:update, answer)
-    p= link_to 'Edit answer', '#', class: 'edit-answer-link', data: {answer_id: answer.id}
-  - if can?(:destroy, answer)
-    p= link_to 'Delete answer', answer_path(answer), method: :delete, remote: true
-  - if can?(:update, answer)
-    = form_with model: answer, class: 'hidden', html: {id: "edit-answer-#{answer.id}"}, local: false do |f|
-      p
-      = f.label :title
-      = f.text_field :title, class: 'form-control'
-      p
-      = f.label :body
-      = f.text_area :body, class: 'form-control'
-      p
-      = f.label :files
-      = f.file_field :files, class: 'form-control', multiple: true, direct_upload: true
-      p
-      p
-      = render 'links/link', resource: answer, f: f
-      = f.submit 'Save'
+    - if can?(:update, answer)
+      p= link_to 'Edit answer', '#', class: 'edit-answer-link', data: {answer_id: answer.id}
+    - if can?(:destroy, answer)
+      p= link_to 'Delete answer', answer_path(answer), method: :delete, remote: true
+    - if can?(:update, answer)
+      = form_with model: answer, class: 'hidden', html: {id: "edit-answer-#{answer.id}"}, local: false do |f|
+        p
+        = f.label :title
+        = f.text_field :title, class: 'form-control'
+        p
+        = f.label :body
+        = f.text_area :body, class: 'form-control'
+        p
+        = f.label :files
+        = f.file_field :files, class: 'form-control', multiple: true, direct_upload: true
+        p
+        p
+        = render 'links/link', resource: answer, f: f
+        = f.submit 'Save'
