@@ -1,24 +1,38 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Курс онлайн-школы для разработчиков Thinknetica, часть 3 Advanced Rails.
 
-Things you may want to cover:
+Проект Questions and Answers(Qna) на Ruby on Rails. Аналог Stack Overflow. 
 
-* Ruby version
+Основные функции: 
+Просмотр и поиск вопросов/ответов доступен без регистрации.
+Пользователь должен зарегистрироваться в приложении, после чего может создавать вопросы, ответы, комментарии,
+просматривать свои вопросы, оставлять комментарии к вопросам и ответам, оставлять/удалять лайки к постам(рейтинг), 
+подписываться/отписываться на уведомления о новых ответах на вопрос, прикреплять файлы к вопросам/ответам.
+Пользователь может редактировать или удалить только свои вопросы или ответы.
+Автор вопроса может выбрать лучший ответ.
+Релизован ActionCable для вопросов, ответов, комментариев.
+Загрузка файлов для вопросов и ответов.  
 
-* System dependencies
 
-* Configuration
+Регистрация пользователя - gem devise. Доступна Аутентификаця через gitHub или VK
+Загрузка изображений - Active Storage (Amazon S3) 
+API для вопросов, ответов, профиля пользователя 
+Политика допустимых действия пользователя - gem cancancan 
+Визуальное оформление bootstrap 4.6.0., шаблонизатор slim
+Полнотекстовый поиск gem Sphinx
+Фоновые задачи gem sidekiq
+Фрагментарное кеширование - gem redis-rails
 
-* Database creation
 
-* Database initialization
+Приложение прокрыто тестами: моделей, контроллеров, а также интеграционными тестами(feature test)    
+Для тестирования приложения используется:
+gem rspec-rails 
+gem factory_bot_rails 
+gem database_cleaner-active_record 
+gem shoulda-matchers
+gem capybara
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Деплой приложения 
+gem unicorn
+gem capistrano
